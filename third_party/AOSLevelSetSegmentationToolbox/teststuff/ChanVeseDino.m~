@@ -1,0 +1,2 @@
+% Chan-Vese dino
+I = double( rgb2gray( imread( 'dino0001.png' ) ) );

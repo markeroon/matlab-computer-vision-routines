@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/121/trunk/MATLAB
+END
+initialize_config.m
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/116/trunk/MATLAB/initialize_config.m
+END
+gmmreg_L2.m
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/121/trunk/MATLAB/gmmreg_L2.m
+END
+readme.txt
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/109/trunk/MATLAB/readme.txt
+END
+gmmreg_demo.m
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/121/trunk/MATLAB/gmmreg_demo.m
+END

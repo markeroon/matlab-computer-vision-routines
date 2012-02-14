@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/121/trunk/MATLAB/registration
+END
+transform_by_affine3d.m
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/109/trunk/MATLAB/registration/transform_by_affine3d.m
+END
+gmmreg_L2_tps_costfunc.m
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/121/trunk/MATLAB/registration/gmmreg_L2_tps_costfunc.m
+END
+quaternion2rotation.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/109/trunk/MATLAB/registration/quaternion2rotation.m
+END
+transform_by_rigid2d.m
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/116/trunk/MATLAB/registration/transform_by_rigid2d.m
+END
+transform_by_rigid3d.m
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/116/trunk/MATLAB/registration/transform_by_rigid3d.m
+END
+transform_by_tps.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/116/trunk/MATLAB/registration/transform_by_tps.m
+END
+compute_kernel.m
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/116/trunk/MATLAB/registration/compute_kernel.m
+END
+gmmreg_L2_costfunc.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/109/trunk/MATLAB/registration/gmmreg_L2_costfunc.m
+END
+transform_pointset.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/109/trunk/MATLAB/registration/transform_pointset.m
+END
+tps_compute_kernel.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/116/trunk/MATLAB/registration/tps_compute_kernel.m
+END
+transform_by_affine2d.m
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/109/trunk/MATLAB/registration/transform_by_affine2d.m
+END

@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/gmmreg_demo.dir/gmmreg_demo.o  -o gmmreg_demo -rdynamic libgmmreg_api.a -lvnl_algo -lnetlib -lv3p_netlib -lvnl -lvcl -lm libport_ini.a 

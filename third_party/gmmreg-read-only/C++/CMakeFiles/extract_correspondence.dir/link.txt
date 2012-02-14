@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/extract_correspondence.dir/extract_correspondence.o CMakeFiles/extract_correspondence.dir/gmmreg_utils.o  -o extract_correspondence -rdynamic -lvnl -lvnl_algo -lvnl -lvcl -lnetlib -lv3p_netlib -lm 

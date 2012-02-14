@@ -1,0 +1,1 @@
+mex CC=g++ -I/usr/include/opencv  -lcxcore -lcv -lhighgui -lcvaux -lml FileReader.cpp

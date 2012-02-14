@@ -1,0 +1,2 @@
+/usr/bin/ar cr libgmmreg_api.a  CMakeFiles/gmmreg_api.dir/gmmreg_utils.o CMakeFiles/gmmreg_api.dir/gmmreg_base.o CMakeFiles/gmmreg_api.dir/gmmreg_cpd.o CMakeFiles/gmmreg_api.dir/gmmreg_tps.o CMakeFiles/gmmreg_api.dir/gmmreg_tps_func.o CMakeFiles/gmmreg_api.dir/gmmreg_grbf.o CMakeFiles/gmmreg_api.dir/gmmreg_grbf_func.o CMakeFiles/gmmreg_api.dir/gmmreg_rigid.o CMakeFiles/gmmreg_api.dir/gmmreg_rigid_func.o CMakeFiles/gmmreg_api.dir/gmmreg_api.o
+/usr/bin/ranlib libgmmreg_api.a

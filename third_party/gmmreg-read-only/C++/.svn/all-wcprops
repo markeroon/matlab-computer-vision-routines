@@ -1,0 +1,209 @@
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/svn/!svn/ver/136/trunk/C++
+END
+gmmreg_utils.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/127/trunk/C++/gmmreg_utils.cpp
+END
+gmmreg_rigid.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/121/trunk/C++/gmmreg_rigid.h
+END
+gmmreg_cpd.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/127/trunk/C++/gmmreg_cpd.cpp
+END
+gmmreg_rigid_func.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/121/trunk/C++/gmmreg_rigid_func.cpp
+END
+gmmreg_api.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/135/trunk/C++/gmmreg_api.cpp
+END
+gmmreg_base.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/134/trunk/C++/gmmreg_base.cpp
+END
+gmmreg_tps.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/127/trunk/C++/gmmreg_tps.h
+END
+test_gauss_transform.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/121/trunk/C++/test_gauss_transform.cpp
+END
+gmmreg_grbf.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/127/trunk/C++/gmmreg_grbf.cpp
+END
+gmmreg_tps_func.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/121/trunk/C++/gmmreg_tps_func.cpp
+END
+gmmreg_demo.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/121/trunk/C++/gmmreg_demo.cpp
+END
+gmmreg.cd
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/121/trunk/C++/gmmreg.cd
+END
+port_ini.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/127/trunk/C++/port_ini.c
+END
+class_diagram.jpg
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/121/trunk/C++/class_diagram.jpg
+END
+port_ini.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/112/trunk/C++/port_ini.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/136/trunk/C++/CMakeLists.txt
+END
+gmmreg_rigid.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/127/trunk/C++/gmmreg_rigid.cpp
+END
+gmmreg_grbf_func.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/127/trunk/C++/gmmreg_grbf_func.h
+END
+extract_correspondence.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/136/trunk/C++/extract_correspondence.cpp
+END
+gmmreg_utils.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/127/trunk/C++/gmmreg_utils.h
+END
+gmmreg_tps.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/127/trunk/C++/gmmreg_tps.cpp
+END
+setup.py
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/121/trunk/C++/setup.py
+END
+gmmreg_cpd.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/127/trunk/C++/gmmreg_cpd.h
+END
+gmmreg_rigid_func.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/121/trunk/C++/gmmreg_rigid_func.h
+END
+gmmreg_api.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/121/trunk/C++/gmmreg_api.h
+END
+gmmreg_base.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/127/trunk/C++/gmmreg_base.h
+END
+config_example.ini
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/133/trunk/C++/config_example.ini
+END
+gmmreg_grbf.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/127/trunk/C++/gmmreg_grbf.h
+END
+gmmreg_tps_func.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/127/trunk/C++/gmmreg_tps_func.h
+END
+gmmreg_mex.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/121/trunk/C++/gmmreg_mex.cpp
+END
+pygmmreg.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/121/trunk/C++/pygmmreg.cpp
+END
+gmmreg_grbf_func.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/127/trunk/C++/gmmreg_grbf_func.cpp
+END
+readme.txt
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/127/trunk/C++/readme.txt
+END
+gmmreg_aux.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/112/trunk/C++/gmmreg_aux.cpp
+END

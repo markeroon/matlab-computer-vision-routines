@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/132/trunk/Python
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/115/trunk/Python/__init__.py
+END
+_plotting.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/132/trunk/Python/_plotting.py
+END
+setup.py
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/104/trunk/Python/setup.py
+END
+_demo.py
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/121/trunk/Python/_demo.py
+END
+readme.txt
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/129/trunk/Python/readme.txt
+END
+_core.py
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/125/trunk/Python/_core.py
+END

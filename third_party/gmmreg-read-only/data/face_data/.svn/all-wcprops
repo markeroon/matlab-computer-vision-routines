@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/62/trunk/data/face_data
+END
+face_X.txt
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/62/trunk/data/face_data/face_X.txt
+END
+face_Y.txt
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/62/trunk/data/face_data/face_Y.txt
+END
+face_ctrl_pts.txt
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/62/trunk/data/face_data/face_ctrl_pts.txt
+END

@@ -1,0 +1,304 @@
+PhD theses:
+
+http://www.romeilsandhu.com/publications/Sandhu10_PhD_Thesis.pdf
+http://doktori.bibl.u-szeged.hu/584/1/dcs_thesis.pdf
+
+Journal Articles (26)
+
+2011 (8):
+
+
+Bing Jian and Baba C. Vemuri,
+"Robust Point Set Registration Using Gaussian Mixture Models,"
+IEEE Transactions on Pattern Analysis and Machine Intelligence, 2011.
+http://www.computer.org/portal/web/csdl/doi/10.1109/TPAMI.2010.223
+
+Jong-Ha Lee and Chang-Hee Won,
+"Topology Preserving Relaxation Labeling for Nonrigid Point Matching,"
+IEEE Transactions on Pattern Analysis and Machine Intelligence, 33(2), pp. 427-432, 2011.
+
+Radu Horaud, Florence Forbes, Manuel Yguel, Guillaume Dewaele, Jian Zhang,
+"Rigid and Articulated Point Registration with Expectation Conditional Maximization,"
+IEEE Transactions on Pattern Analysis and Machine Intelligence, 33(3), pp. 587-602, 2011.
+
+Hongsheng Li, Tian Shen, Xiaolei Huang,
+"Approximately Global Optimization for Robust Alignment of Generalized Shapes,"
+IEEE Transactions on Pattern Analysis and Machine Intelligence, 2011.
+http://www.computer.org/portal/web/csdl/doi/10.1109/TPAMI.2010.169
+
+Kurtek S, Klassen E, Ding Z, Jacobson S, Jacobson JL, Avison MJ, Srivastava A.
+Parameterization-Invariant Shape Comparisons of Anatomical Surfaces.
+IEEE Transactions on Medical Imaging, 2011
+http://www.ncbi.nlm.nih.gov/pubmed/21156390
+
+Dirk Breitenreicher and Christoph Schnorr,
+Model-Based Multiple Rigid Object Detection and Registration in Unstructured Range Data
+International Journal of Computer Vision, 2011
+http://www.springerlink.com/content/v266873267180602/
+
+
+
+Jeffrey Ho and Ming-Hsuan Yang,
+"On affine registration of planar point sets using complex numbers,"
+Computer Vision and Image Understanding, 2011
+http://portal.acm.org/citation.cfm?id=1879306
+ 
+Pengwen Chen 
+A Novel Kernel Correlation Model with the Correspondence Estimation  
+Journal of Mathematical Imaging and Vision, 2011
+http://www.springerlink.com/content/707100l2514n896h/
+
+2010 (10):
+Andriy Myronenko, Xubo Song,
+"Point Set Registration: Coherent Point Drift,"
+IEEE Transactions on Pattern Analysis and Machine Intelligence, 32(12), pp. 2262-2275, 2010.
+
+Ting Chen, Baba C. Vemuri, Anand Rangarajan, Stephan J. Eisenschenk.
+"Group-Wise Point-Set Registration Using a Novel CDF-Based Havrda-Charv¨¢t Divergence."
+International Journal of Computer Vision, 86(1):111-124, 2010
+
+Romeil Sandhu, Samuel Dambreville, Allen Tannenbaum,
+"Point Set Registration Via Particle Filtering and Stochastic Dynamics,"
+IEEE Transactions on Pattern Analysis and Machine Intelligence, 08 Jul. 2009.
+http://doi.ieeecomputersociety.org/10.1109/TPAMI.2009.142
+
+
+Zvitia O, Mayer A, Shadmi R, Miron S, Greenspan HK.
+"Co-registration of white matter tractographies by adaptive-mean-shift and Gaussian mixture modeling."
+IEEE Trans Med Imaging. 2010 Jan;29(1):132-45.
+http://www.almaden.ibm.com/cs/projects/aalim/papers/IEEE_TMI_DTI.pdf
+
+Yonghuai Liu,
+Free form shape registration using the barrier method,
+Computer Vision and Image Understanding, Volume 114, Issue 9, September 2010, Pages 1004-1016,
+
+
+Shaoyi Du, Nanning Zheng, Shihui Ying, and Jianyi Liu.
+"Affine iterative closest point algorithm for point set registration. "
+Pattern Recogn. Lett. 31, 9 (July 2010), 791-799.
+
+Babapour Mofrad, Farshid; Abbaspour Tehrani-Fard, Ali; Aghaeizadeh Zoroofi, Reza;
+Akhlaghpoor, Shahram; Chen, Yen-Wei
+"A Novel Wavelet Based Multi-Scale Statistical Shape Model-Analysis for
+the Liver Application: Segmentation and Classification"
+Current Medical Imaging Reviews, Volume 6, Number 3, August 2010 , pp. 145-155(11)
+
+
+Hongyu Guo, Anand Rangarajan,
+"Diffeomorphic Point Matching with Applications in Biomedical Image Registration,"
+International Journal of Tomography & Statistics, Fall 2010, Volume 15, Number F10
+
+
+Jianqin Qu, Leiguang Gong and Lin Yang
+A 3D point matching algorithm for affine registration
+International Journal of Computer Assisted Radiology and Surgery, 2010
+
+
+Frank Pfeuffer, Michael Stiglmayr and Kathrin Klamroth
+Discrete and geometric Branch and Bound algorithms for medical image registration
+Annals of Operations Research, 2010
+
+
+2009 (5):
+Huijun Di, Linmi Tao, Guangyou Xu,
+"A Mixture of Transformed Hidden Markov Models for Elastic Motion Estimation,"
+IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 31, no. 10, pp. 1817-1830, May 2009,
+doi:10.1109/TPAMI.2009.111
+
+Adrian M. Peter, Anand Rangarajan,
+"Information Geometry for Landmark Shape Analysis: Unifying Shape Representation and Deformation,"
+IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 31, no. 2, pp. 337-350, Feb. 2009,
+doi:10.1109/TPAMI.2008.69
+
+Demetrios Gerogiannis, Christophoros Nikou, Aristidis Likas.
+"The mixtures of Student's t-distributions as a robust framework for rigid registration,"
+Image and Vision Computing, 27(9):1285-1294, 2009.
+http://linkinghub.elsevier.com/retrieve/pii/S0262885608002473
+
+Dirk Breitenreicher, Christoph Schnorr.
+"Robust 3D object registration without explicit correspondence using geometric integration."
+Machine Vision and Applications, 21(5):601-611, 2010.
+http://www.springerlink.com/index/g20710062l014241.pdf
+
+Kwangbom Choi and Shawn M Gomez.
+"Comparison of phylogenetic trees through alignment of embedded evolutionary distances."
+BMC Bioinformatics 2009, 10:423
+http://www.biomedcentral.com/1471-2105/10/423
+
+
+2008 (2):
+Fei Wang, Baba C. Vemuri, Anand Rangarajan, Stephan J. Eisenschenk:
+"Simultaneous Nonrigid Registration of Multiple Point Sets and Atlas Construction."
+IEEE Trans. Pattern Anal. Mach. Intell. 30(11): 2011-2022 (2008)
+
+Umberto Castellani, Vincent Gay-Bellile, Adrien Bartoli:
+"Robust deformation capture from temporal range data for surface rendering. "
+Journal of Visualization and Computer Animation 19(5): 591-603 (2008)
+http://www.lasmea.univ-bpclermont.fr/Personnel/Adrien.Bartoli/Publications/Castellani_Gay-Bellile_Bartoli_CAVW08.pdf
+
+
+2007 (2):
+Benedict J. Brown, Szymon Rusinkiewicz,
+"Global non-rigid alignment of 3-D scans,"
+ACM Transactions on Graphics (TOG), 26(3), July 2007
+
+Fei Wang and Baba C. Vemuri.
+"Non-Rigid Multi-Modal Image Registration Using Cross-Cumulative Residual Entropy."
+International Journal of Computer Vision, 74(2):201-215, 2007.
+
+
+
+Conference Articles (31):
+
+2010(5):
+F. Escolano, M. A. Lozano, B. Bonev, P. Suau, 
+Bypass information-theoretic shape similarity from non-rigid points-based alignment
+in proceedings of the 3rd Workshop on Non-Rigid Shape Analysis and Deformable Image Alignment (NORDIA'2010), pp. 37-44, ISBN: 978-1-4244-7029-7 (2010)
+
+Geoffrey Oxholm and Ko Nishino
+Membrane Nonrigid Image Registration
+http://www.cs.drexel.edu/~kon/publication/GOxholm_ECCV10_preprint.pdf
+ECCV 2010
+
+Wei Lian and Lei Zhang
+Rotation Invariant Non-rigid Shape Matching in Cluttered Scenes
+http://www4.comp.polyu.edu.hk/~cslzhang/paper/conf/ECCV10_RINSM.pdf
+ECCV 2010
+
+Meizhu Liu, Baba Vemuri, Shun-ichi Amari, Frank Nielsen:
+"Total Bregman Divergence and its Applications to Shape Retrieval."
+CVPR 2010
+
+Jun-yan Chang, Fei-peng Da,  Liang Cai,
+Three Dimensional Face Recognition Based On Geodesic Distance
+2010 Chinese Conference on Pattern Recognition
+http://ieeexplore.ieee.org/xpl/freeabs_all.jsp?arnumber=5659227
+
+2009(13):
+Jeffrey Ho, Adrian Peter, Anand Rangarajan and Ming-Hsuan Yang,
+"An algebraic approach to affine registration of point sets,"
+IEEE International Conference on Computer Vision (ICCV), 2009.
+
+Diego Thomas, Akihiro Sugimoto,
+Robust range image registration using local distribution of albedo
+2009 IEEE International Workshop on 3-D Digital Imaging and Modeling.
+
+Jianke Zhu, Steven C. H. Hoi, Michael R. Lyu:
+"Nonrigid shape recovery by Gaussian process regression."
+CVPR 2009: 1319-1326
+http://www.cais.ntu.edu.sg/~chhoi/paper_pdf/CVPR2009.pdf
+
+Hongsheng Li, Tian Shen, Xiaolei Huang:
+"Global optimization for alignment of generalized shapes."
+CVPR 2009: 856-863
+http://www.lehigh.edu/~hol207/cvpr09_li_shape.pdf
+
+Nicholas J. Tustison, Suyash P. Awate, Gang Song, Tessa Sundaram Cook, James C. Gee:
+"A New Information-Theoretic Measure to Control the Robustness-Sensitivity Trade-Off for DMFFD Point-Set Registration."
+IPMI 2009: 215-226
+http://www.springerlink.com/index/vv50033xt6718861.pdf
+
+Fei Wang, Baba C. Vemuri, Tanveer Fathima Syeda-Mahmood:
+"Generalized L2-Divergence and Its Application to Shape Alignment."
+IPMI 2009: 227-238
+http://www.springerlink.com/index/m7n4422244872029.pdf
+
+Fei Wang, Tanveer Fathima Syeda-Mahmood, Baba C. Vemuri, David Beymer, Anand Rangarajan:
+"Closed-Form Jensen-Renyi Divergence for Mixture of Gaussians and Applications to Group-Wise Shape Registration."
+MICCAI (1) 2009: 648-655
+http://www.springerlink.com/index/4156556h3w635838.pdf
+
+Guang Cheng, Baba C. Vemuri, Paul R. Carney, Thomas H. Mareci:
+"Non-rigid Registration of High Angular Resolution Diffusion Images Represented by Gaussian Mixture Fields."
+MICCAI (1) 2009: 190-197
+http://www.springerlink.com/index/r9571658349437g7.pdf
+
+Tommaso Mansi, Stanley Durrleman, Boris Bernhardt, Maxime Sermesant, Herv¨¦ Delingette, Ingmar Voigt, Philipp Lurz, Andrew M. Taylor, Julie Blanc, Younes Boudjemline, Xavier Pennec, Nicholas Ayache:
+"A Statistical Model of Right Ventricle in Tetralogy of Fallot for Prediction of Remodelling and Therapy Planning."
+MICCAI (1) 2009: 214-221
+
+Dirk Breitenreicher, Christoph Schnorr:
+"Intrinsic Second-Order Geometric Optimization for Robust Point Set Registration without Correspondence." EMMCVPR 2009: 274-287
+http://www.springerlink.com/index/1470n7577713069q.pdf
+
+Yanghai Tsin, Yakup Genc, Visvanathan Ramesh,
+"Explicit 3D Modeling for Vehicle Monitoring in Non-overlapping Cameras,"
+avss, pp.110-115, 2009 Sixth IEEE International Conference on Advanced Video and Signal Based Surveillance, 2009
+http://doi.ieeecomputersociety.org/10.1109/AVSS.2009.61
+
+Jundong Liu, C.D. Smith, H. Chebrolu,
+"Automatic Multiple Sclerosis detection based on integrated square estimation,"
+MMBIA'09
+http://doi.ieeecomputersociety.org/10.1109/CVPR.2009.5204351
+
+Yongli Hu, Mingquan Zhou, Zhongke Wu,
+"An Automatic Non-rigid Point Matching Method for Dense 3D Face Scans,"
+iccsa, pp.215-221, 2009 International Conference on Computational Science and Its Applications, 2009
+http://doi.ieeecomputersociety.org/10.1109/ICCSA.2009.12
+
+
+
+2008(4):
+Romeil Sandhu, Samuel Dambreville, Allen Tannenbaum:
+"Particle filtering for registration of 2D and 3D point sets with stochastic dynamics."
+CVPR 2008
+
+Benoit Combes, Sylvain Prima:
+"New Algorithms to Map Asymmetries of 3D Surfaces."
+MICCAI (1) 2008: 17-25
+
+A. H. Abdul Hafez, Supreeth Achar, C. V. Jawahar:
+"Visual servoing based on Gaussian mixture models."
+ICRA 2008: 3225-3230
+
+Orly Zvitia, Arnaldo Mayer, Hayit Greenspan:
+"Adaptive mean-shift registration of white matter tractographies."
+ISBI 2008: 692-695
+
+
+2007(5):
+Huijun Di, Rao Naveed Iqbal, Guangyou Xu, Linmi Tao:
+"Groupwise Shape Registration on Raw Edge Sequence via A Spatio-Temporal Generative Model".
+CVPR 2007
+
+Andriy Myronenko, Xubo B. Song, Miguel A. Carreira-Perpinan:
+"Free-Form Nonrigid Image Registration Using Generalized Elastic Nets".
+CVPR 2007
+
+Demetrios Gerogiannis, Christophoros Nikou, and Aristidis Likas.
+"Robust Image Registration using Mixtures of t-distributions".
+In 8th IEEE Computer Society Workshop on Mathematical Methods in Biomedical Image Analysis (MMBIA¡¯07), Rio de Janeiro, Brazil, October 2007.
+
+Arunabha S. Roy, Ajay Gopinath, Anand Rangarajan:
+"Deformable Density Matching for 3D Non-rigid Registration of Shapes."
+MICCAI (1) 2007: 942-949
+
+Shuisheng Xie, Jundong Liu, Darlene Berryman, Edward List, Charles Smith, and Hima Chebrolu.
+"A Robust Image Segmentation Model Based on Integrated Square Estimation."
+In ISVC07, pages 643-651, 2007.
+
+
+
+2006(4):
+Andriy Myronenko, Xubo B. Song, and Miguel. Carreira-Perpian.
+"Non-rigid point set registration: Coherent Point Drift."
+In NIPS06, pages 1009-1016, 2006.
+
+Fei Wang, Baba C. Vemuri, and Anand Rangarajan.
+"Groupwise point pattern registration using a novel CDF-based Jensen-Shannon Divergence."
+In CVPR06, pages 1283-1288, 2006.
+
+Jinzhong Yang, Rick S. Blum, James P. Williams, Yiyong Sun, and Chenyang Xu.
+"Non-rigid Image Registration Using Geometric Features and Local Salient Region Features."
+In CVPR06, pages 825-832, 2006.
+
+Xiao Dong and Guoyan Zheng.
+"Finding Deformable Shapes by Point Set Matching Through Nonparametric Belief Propagation."
+In MIAR06, pages 60-67, 2006.
+
+
+Technical Reports/Theses:
+http://www.am.sanken.osaka-u.ac.jp/~mukaigaw/papers/CVIM2006-ACCV2006Report.pdf
+ftp://ftp.cs.ucla.edu/tech-report/2007-reports/070005.pdf
+http://www.cs.uoi.gr/~dgerogia/PDF/msc_thesis.pdf
+http://ganymed.imib.rwth-aachen.de/lehmann/seminare/bv_2007-04.pdf

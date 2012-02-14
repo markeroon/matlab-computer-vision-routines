@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/98/trunk/Python/c_extension
+END
+GaussTransform.c
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/96/trunk/Python/c_extension/GaussTransform.c
+END
+memory_layout_note.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/96/trunk/Python/c_extension/memory_layout_note.h
+END
+DistanceMatrix.c
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/96/trunk/Python/c_extension/DistanceMatrix.c
+END
+cvgmi_API.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/96/trunk/Python/c_extension/cvgmi_API.h
+END
+py_extension.c
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/98/trunk/Python/c_extension/py_extension.c
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/96/trunk/Python/c_extension/CMakeLists.txt
+END

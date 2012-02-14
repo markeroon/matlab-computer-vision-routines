@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/gmmreg_aux.dir/gmmreg_aux.o  -o gmmreg_aux -rdynamic -lvnl -lvnl_algo -lvnl -lvcl -lnetlib -lv3p_netlib -lm 

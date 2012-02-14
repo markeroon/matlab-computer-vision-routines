@@ -1,0 +1,2 @@
+/usr/bin/ar cr libport_ini.a  CMakeFiles/port_ini.dir/port_ini.o
+/usr/bin/ranlib libport_ini.a

@@ -1,0 +1,6 @@
+/home/mark/Code/third_party/gmmreg-read-only/C++/CMakeFiles/extract_correspondence.dir
+/home/mark/Code/third_party/gmmreg-read-only/C++/CMakeFiles/gmmreg_api.dir
+/home/mark/Code/third_party/gmmreg-read-only/C++/CMakeFiles/gmmreg_aux.dir
+/home/mark/Code/third_party/gmmreg-read-only/C++/CMakeFiles/gmmreg_demo.dir
+/home/mark/Code/third_party/gmmreg-read-only/C++/CMakeFiles/port_ini.dir
+/home/mark/Code/third_party/gmmreg-read-only/C++/CMakeFiles/test_gauss_transform.dir

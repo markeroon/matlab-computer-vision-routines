@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/109/trunk/MATLAB/auxilliary
+END
+set_bounds.m
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/109/trunk/MATLAB/auxilliary/set_bounds.m
+END
+set_ctrl_pts.m
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/109/trunk/MATLAB/auxilliary/set_ctrl_pts.m
+END
+DisplayPoints2D.m
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/109/trunk/MATLAB/auxilliary/DisplayPoints2D.m
+END
+DisplayPoints3D.m
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/109/trunk/MATLAB/auxilliary/DisplayPoints3D.m
+END
+determine_border.m
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/109/trunk/MATLAB/auxilliary/determine_border.m
+END
+ml_GetPrivateProfileString.m
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/109/trunk/MATLAB/auxilliary/ml_GetPrivateProfileString.m
+END
+estimate_scale.m
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/109/trunk/MATLAB/auxilliary/estimate_scale.m
+END
+DisplayPoints.m
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/109/trunk/MATLAB/auxilliary/DisplayPoints.m
+END

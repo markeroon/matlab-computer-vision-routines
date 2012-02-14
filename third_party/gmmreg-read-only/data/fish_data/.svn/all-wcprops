@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/62/trunk/data/fish_data
+END
+fish_Y.txt
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/62/trunk/data/fish_data/fish_Y.txt
+END
+fish_ctrl_pts.txt
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/62/trunk/data/fish_data/fish_ctrl_pts.txt
+END
+fish_Y_notail.txt
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/62/trunk/data/fish_data/fish_Y_notail.txt
+END
+fish_X_nohead.txt
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/62/trunk/data/fish_data/fish_X_nohead.txt
+END
+fish_X.txt
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/62/trunk/data/fish_data/fish_X.txt
+END

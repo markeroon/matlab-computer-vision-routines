@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/test_gauss_transform.dir/test_gauss_transform.o CMakeFiles/test_gauss_transform.dir/gmmreg_utils.o  -o test_gauss_transform -rdynamic -lvnl_algo -lvnl -lvcl -lnetlib -lv3p_netlib -lm 
