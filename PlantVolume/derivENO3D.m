@@ -1,0 +1,51 @@
+function [phi_x,phi_y,phi_z] = derivENO3D( phi, dx, dy, dz, u, v, w )
+%
+% Finds the amount of evolution under a vector field
+% based force and using 3rd order accurate ENO scheme
+%
+% Adapted by Mark Brophy (mbrophy5@csd.uwo.ca)
+% from the work of Baris Sumengen  sumengen@ece.ucsb.edu
+% http://vision.ece.ucsb.edu/~sumengen/
+%
+
+u_ext = zeros(size(u)+6);
+v_ext = zeros(size(v)+6);
+w_ext = zeros(size(w)+6);
+u_ext(4:end-3,4:end-3,4:end-3) = u;
+v_ext(4:end-3,4:end-3,4:end-3) = v;
+w_ext(4:end-3,4:end-3,4:end-3) = w;
+
+data_ext = zeros(size(phi)+6);
+data_ext(4:end-3,4:end-3,4:end-3) = phi;
+phi_x = zeros(size(phi)+6);
+phi_y = zeros(size(phi)+6);
+phi_z = zeros(size(phi)+6);
+
+% scan the depth
+for k = 1:size(phi,3) % can do k+3 because of the extended delta above
+    % scan the rows
+    for i=1:size(phi,1)
+        phi_x(i+3,:,k+3) = upwind_ENO3(data_ext(i+3,:,k+3), u_ext(i+3,:,k+3), dx);
+    end
+end
+
+% scan the depth
+for k = 1:size(phi,3)
+    % scan the columns
+    for j=1:size(phi,2)
+        phi_y(:,j+3,k+3) = upwind_ENO3(data_ext(:,j+3,k+3), v_ext(:,j+3,k+3), dy);
+    end
+end
+
+% scan the columns
+for i = 1:size(phi,1)
+    % scan the rows
+    for j = 1:size(phi,2)
+        phi_z(i+3,j+3,:) = upwind_ENO3(data_ext(i+3,j+3,:), w_ext(i+3,j+3,:), dz);
+    end
+end
+
+
+phi_x = phi_x(4:end-3,4:end-3,4:end-3);
+phi_y = phi_y(4:end-3,4:end-3,4:end-3);
+phi_z = phi_z(4:end-3,4:end-3,4:end-3);
