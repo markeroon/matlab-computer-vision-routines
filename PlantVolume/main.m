@@ -9,7 +9,7 @@ filename_0 = '~/Data/branch_test.ply';
 [Elements_0,varargout_0] = plyread(filename_0);
 X = [Elements_0.vertex.x';Elements_0.vertex.y';Elements_0.vertex.z']';
 
-N = 50;
+N = 70;
 x_min = min( X(:,1) ) - 5;
 x_max = max( X(:,1) ) + 5;
 y_min = min( X(:,2) ) - 5;
@@ -37,14 +37,14 @@ ghostcell_width = 3;
 reinit_iterations = 100;
 spatial_deriv_order = 3;
 dphi_dt = 0;
-dt=.7;
+dt=.00001;
 for i=1:10000
 [phi_x,phi_y,phi_z] = computeUpwindDerivatives3D( phi, ...
                                                            d_x,d_y,d_z, ...
                                                            ghostcell_width, ...
                                                            dX, spatial_deriv_order );
 dphi_dt = phi_x.*d_x + phi_y.*d_y + phi_z.*d_z;
-phi = -dphi_dt*dt + phi;
+phi = dphi_dt*dt + phi;
 phi = reinitializeLevelSetFunction(phi, ...
                                     ghostcell_width, ...
                                     dX, ...

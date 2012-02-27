@@ -21,8 +21,8 @@ end
 
 iters_rigid = 0;
 iters_nonrigid = 150;
-lambda = 13; % regularization weight
-beta = 10; % width of gaussian
+lambda = 3;
+beta = ;
 [Y1_,Y2_,Y3_] = registerToReferenceRangeScan(X{20}, X{212}, iters_rigid, ...                                                iters_rigid,...
                                                      iters_nonrigid,...
                                                        lambda,...
