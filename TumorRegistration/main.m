@@ -20,14 +20,25 @@ for i=1:num_segmentations
 end
 
 iters_rigid = 0;
-iters_nonrigid = 150;
-lambda = 13; % regularization weight
-beta = 10; % width of gaussian
-[Y1_,Y2_,Y3_] = registerToReferenceRangeScan(X{20}, X{212}, iters_rigid, ...                                                iters_rigid,...
-                                                     iters_nonrigid,...
-                                                       lambda,...
-                                                       beta,...
-                                                       1);
+iters_nonrigid = 70;
+lambda = 3;%13; % regularization weight
+beta = .1;%10; % width of gaussian
+Y = ones(size(X{212}));
+[Y(:,1),Y(:,2),Y(:,3),t_r,t_nr,c_r,c_nr] = ...
+    registerToReferenceRangeScan(X{20}, X{212}, iters_rigid, ...                                                iters_rigid,...
+                                  iters_nonrigid, lambda,...
+                                  beta, 1);
+
+lambda = 3;
+beta = .1;
+Y_ = ones(size(X{212}));
+[Y_(:,1),Y_(:,2),Y_(:,3),t_r2,t_nr2,c_r2,c_nr2] = ...
+    registerToReferenceRangeScan(X{212},Y, iters_rigid, ...                                                iters_rigid,...
+                                  iters_nonrigid, lambda,...
+                                  beta, 1);
+
+                                                   
+%{
 b = rois_patient001{2};
 b_x2=[];b_y2=[];b_z2=[];
 for i = 1:size(b,1)
@@ -36,7 +47,7 @@ for i = 1:size(b,1)
     b_z2 = [b_z2; b{i}(:,3)];
 end
 
-
+%}
 
 
 Data.vertex.x = b_x;
