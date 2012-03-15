@@ -20,16 +20,16 @@ Yr_subdiv = ones(size(Y));
                                            X,Y,iters_rigid,iters_nonrigid );
  %}
 
-X = X(1:20:end,:);
-Y = Y(1:20:end,:);
+X = X(1:40:end,:);
+Y = Y(1:40:end,:);
 
 lambda = 10;
 beta = 10;
 Y_ = ones(size(Y));
-iters_rigid = 0;
+iters_rigid = 30;
 iters_nonrigid  = 30;
-[Y_(:,1),Y_(:,2),Y_(:,3)] = registerToReferenceRangeScan(X, Y, 0, ...                                                iters_rigid,...
-                                                    5,...
+[Y_(:,1),Y_(:,2),Y_(:,3)] = registerToReferenceRangeScan(X, Y, iters_rigid, ...                                                iters_rigid,...
+                                                    iters_nonrigid,...
                                                     lambda,...
                                                     beta,...
                                                     2);
@@ -41,10 +41,10 @@ iters_nonrigid  = 30;
 
 X_reg = ones(size(X(neighbour_id,:)));
 [X_reg(:,1),X_reg(:,2),X_reg(:,3)] = registerToReferenceRangeScan( ...
-                                          Y,X(neighbour_id,:),...
+                                            Y,X(neighbour_id,:),...
                                           iters_rigid,iters_nonrigid,...
                                           lambda,beta,2 );
                                        
-[neighbour_id_reg,neighbour_dist_reg] = kNearestNeighbors(Y,X_reg,1 );
+[neighbour_id_reg,neighbour_dist_reg] = kNearestNeighbors(X_reg,X,1 );
 sprintf('RMS-E: ' )
 rms_e = sqrt( sum(neighbour_dist_reg(:))/ length(neighbour_dist_reg(:)) )                      

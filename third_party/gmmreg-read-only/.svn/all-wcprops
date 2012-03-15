@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 23
-/svn/!svn/ver/139/trunk
+/svn/!svn/ver/143/trunk
 END
 gmmreg.png
 K 25
@@ -15,11 +15,11 @@ svn:wc:ra_dav:version-url
 V 31
 /svn/!svn/ver/126/trunk/LICENSE
 END
-iccv05_bib.txt
+gmmreg_bib.txt
 K 25
 svn:wc:ra_dav:version-url
 V 38
-/svn/!svn/ver/137/trunk/iccv05_bib.txt
+/svn/!svn/ver/143/trunk/gmmreg_bib.txt
 END
 citations.txt
 K 25

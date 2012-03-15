@@ -1,0 +1,37 @@
+addpath( genpath( '../third_party/gmmreg-read-only/MATLAB' ) );
+addpath( '../file_management/' );
+
+filename_0 = sprintf( '~/Data/PlantDataPly/plants_converted82-%03d-clean_cut.ply', 3 );
+[Elements_0,varargout_0] = plyread(filename_0);
+X = [Elements_0.vertex.x';Elements_0.vertex.y';Elements_0.vertex.z']';
+    
+filename_1 = sprintf( '~/Data/PlantDataPly/plants_converted82-%03d-clean_cut.ply', 4 );
+[Elements_1,varargout_1] = plyread(filename_1);
+Y = [Elements_1.vertex.x';Elements_1.vertex.y';Elements_1.vertex.z']';
+
+model = X(1:40:end,:);
+scene = Y(1:40:end,:);
+
+%S = load('../../Data/fish_data/fish_Y.txt');
+%M = load('../../Data/fish_data/fish_X.txt');
+
+
+
+config_rigid_init = initialize_config( model,scene,'rigid3d' );
+config_rigid_init.max_iter = 100;
+config_rigid_init.beta = 1;
+config_rigid_init.display = 1;
+config_rigid_init.normalize = 1;
+
+[rigid_param, rigid_transformed_model, rigid_history, rigid_config_final] = ...
+                                        gmmreg_L2(config_rigid_init)
+
+
+config_tps_init = initialize_config( rigid_transformed_model,scene,'tps' );
+config_tps_init.max_iter = 100;
+config_tps_init.beta = 5;
+config_tps_init.alpha = 4;
+config_tps_init.display = 1;
+config_tps_init.normalize = 1;
+[tps_param, tps_transformed_model, tps_history, tps_config_final] = ...
+                                        gmmreg_L2(config_tps_init)

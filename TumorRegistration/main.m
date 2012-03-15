@@ -2,6 +2,7 @@ data = open('../../Data/DeformStaple_allpatients.mat')
 addpath('../PointCloudGenerator' );
 addpath(genpath('../third_party/CPD2/'));
 addpath('../plant_registration');
+names = data.names_patient001;
 segmentation = data.rois_patient001;
 num_segmentations = size(segmentation,2);
 X = cell(num_segmentations,1);
@@ -41,7 +42,7 @@ sprintf('RMS-E: ' )
 rms_e = sqrt( sum(neighbour_dist_reg(:))/ length(neighbour_dist_reg(:)) ) 
 
 
-iters_rigid = 0;
+iters_rigid = 30;
 iters_nonrigid = 20;
 lambda = 3;%13; % regularization weight
 beta = .1;%10; % width of gaussian

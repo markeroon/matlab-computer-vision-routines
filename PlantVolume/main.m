@@ -9,7 +9,7 @@ filename_0 = '~/Data/branch_test.ply';
 [Elements_0,varargout_0] = plyread(filename_0);
 X = [Elements_0.vertex.x';Elements_0.vertex.y';Elements_0.vertex.z']';
 
-N = 70;
+N = 50;
 x_min = min( X(:,1) ) - 5;
 x_max = max( X(:,1) ) + 5;
 y_min = min( X(:,2) ) - 5;

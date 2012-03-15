@@ -165,7 +165,7 @@ int GetPrivateProfileString(const char *section, const char *entry, const char *
     ep_end = ep + strlen(ep);
 
     while (ep_end>ep){
-        if isspace(*(ep_end-1))
+        if (isspace(*(ep_end-1)))
             ep_end--;
         else
             break;
