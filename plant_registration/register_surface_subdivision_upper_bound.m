@@ -1,32 +1,10 @@
+%REGISTER_VIA_SURFACE_SUBDIVISION Do a coarse to fine, recursive
+%registration.
 function [Y1,Y2,Y3] = ...
                     register_surface_subdivision_upper_bound( X,Y,iters_rigid,...
                                                       iters_nonrigid )
-%REGISTER_VIA_SURFACE_SUBDIVISION Do a coarse to fine registration.
-%
-%MIN_SIZE = 250;
-%THRESH_SSD = 5;
-%MAX_SSD_DIST = 10; % If dist is larger than this, it is not
-                   % included in the error estimation.
-
-width = ( max(X(:,1)) - min(X(:,1)) ); % / 2 
-height = ( max(X(:,2)) - min(X(:,2)) ); %/ 2 
-depth = ( max(X(:,3)) - min(X(:,3)) ); % / 2 
-
-%iters_nonrigid__ = iters_nonrigid;
-
-%MIN_WIDTH = 35; MIN_HEIGHT = 35; MIN_DEPTH = 35;
-
-% YOU ONLY ADD AT THE SMALLEST LEVEL OF GRANULARITY
-%while width > MIN_WIDTH && height > MIN_HEIGHT && depth > MIN_HEIGHT
     
-    %width = width / 2
-    %height = height / 2
-    %depth = depth / 2
-    
-    [Y1,Y2,Y3] = registerPoints( X,Y,iters_rigid,iters_nonrigid );
-    %for i=left:width:right-width
-    %    for j=bottom:height:top-height
-    %        for k=back:depth:front-depth
+[Y1,Y2,Y3] = registerPoints( X,Y,iters_rigid,iters_nonrigid );
 end    
  
 function [X__,Y__,Z__] = registerPoints( X,Y,iters_rigid,iters_nonrigid )   
@@ -45,12 +23,12 @@ function [X__,Y__,Z__] = registerPoints( X,Y,iters_rigid,iters_nonrigid )
         max_z = max( [ X(:,3);Y3_ ] ) 
         pad = 0.2;
         
-        left_x   = min_x %- pad*min_x%min(X(:,1)) - left_pad*min(X(:,1))
-        right_x  = max_x %+ pad*max_x%max(X(:,1)) + right_pad*max(X(:,1))
-        top_x    = max_y %+ pad*max_y%max(X(:,2)) + top_pad*max(X(:,2))
-        bottom_x = min_y %- pad*min_y%min(X(:,2)) - bottom_pad*min(X(:,2))
-        back_x   = min_z %- pad*min_z%min(X(:,3)) - back_pad*min(X(:,3))
-        front_x  = max_z %+ pad*max_z%max(X(:,3)) + front_pad*max(X(:,3))
+        left_x   = min_x - pad*min_x
+        right_x  = max_x + pad*max_x
+        top_x    = max_y + pad*max_y
+        bottom_x = min_y - pad*min_y
+        back_x   = min_z - pad*min_z
+        front_x  = max_z + pad*max_z
         
         % this use of X co-ords as the dividing space is on purpose
         left_y   =  min_x %min(X(:,1))
