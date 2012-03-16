@@ -8,7 +8,7 @@ function [Y1,Y2,Y3] = ...
 end    
  
 function [X__,Y__,Z__] = registerPoints( X,Y,iters_rigid,iters_nonrigid )   
-    MIN_SIZE = 250;
+    MIN_SIZE = 50;
     if size(X,1) > MIN_SIZE && size(Y,1) > MIN_SIZE
        
         [Y1_,Y2_,Y3_,tr,tnr,cr] = registerToReferenceRangeScan(X, Y, iters_rigid, ...                                                iters_rigid,...
@@ -23,12 +23,12 @@ function [X__,Y__,Z__] = registerPoints( X,Y,iters_rigid,iters_nonrigid )
         max_z = max( [ X(:,3);Y3_ ] ) 
         pad = 0.2;
         
-        left_x   = min_x - pad*min_x
-        right_x  = max_x + pad*max_x
-        top_x    = max_y + pad*max_y
-        bottom_x = min_y - pad*min_y
-        back_x   = min_z - pad*min_z
-        front_x  = max_z + pad*max_z
+        left_x   = min_x - abs(pad*min_x)
+        right_x  = max_x + abs(pad*max_x)
+        top_x    = max_y + abs(pad*max_y)
+        bottom_x = min_y - abs(pad*min_y)
+        back_x   = min_z - abs(pad*min_z)
+        front_x  = max_z + abs(pad*max_z)
         
         % this use of X co-ords as the dividing space is on purpose
         left_y   =  min_x %min(X(:,1))
