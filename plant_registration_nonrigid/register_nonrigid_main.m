@@ -17,10 +17,12 @@ Y = Y(1:40:end,:);
 
 iters_rigid = 50;
 iters_nonrigid = 0;
+lambda = 1;
+beta = .1;
 Yr_subdiv = ones(size(Y));
 
 [Yr_subdiv(:,1),Yr_subdiv(:,2),Yr_subdiv(:,3)] = register_surface_subdivision_upper_bound( ...
-                                           X,Y,iters_rigid,iters_nonrigid );
+                                           X,Y,iters_rigid,iters_nonrigid,lambda,beta );
                                        
 [neighbour_id,neighbour_dist] = kNearestNeighbors(X, Yr_subdiv, 1 );
 % get nearest neighbour for each point in the original cloud in the
@@ -31,7 +33,7 @@ neighbour_id_unique = unique(neighbour_id);
 
 X_reg = ones(size(X(neighbour_id_unique,:)));
 [X_reg(:,1),X_reg(:,2),X_reg(:,3)] = register_surface_subdivision_upper_bound( ...
-                                          Y,X(neighbour_id_unique,:),iters_rigid,iters_nonrigid );
+                                          Y,X(neighbour_id_unique,:),iters_rigid,iters_nonrigid,lambda, beta );
                                        
 [neighbour_id_reg,neighbour_dist_reg] = ...
                     kNearestNeighbors(X_reg, X, 1 );
