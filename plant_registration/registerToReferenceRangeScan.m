@@ -5,7 +5,7 @@ function [X2_registered,Y2_registered,Z2_registered,...
           C_r,C_nr] = ...
            registerToReferenceRangeScan( model_no_ground,scene_no_ground, ...
                                          num_rigid_iters,num_nonrigid_iters, ...
-                                         lambda, beta, fgt_val ) 
+                                         lambda, beta, fgt_val,scale ) 
                                  
 
 % [0,1,2] if > 0, then use FGT. case 1: 
@@ -16,11 +16,19 @@ function [X2_registered,Y2_registered,Z2_registered,...
 %to the truncated kernels, but more accurate than case 1)
 
 if nargin == 6
-    opt.fgt = 1;
-    sprintf( 'fgt = 1' )
-else
+    opt.fgt = 0;
+    opt.scale = 0;
+    sprintf( 'fgt = 0, scale = 0' )
+elseif nargin == 7
+    opt.scale = 0;
     opt.fgt = fgt_val;
-    sprintf( 'fgt = %d', fgt_val )
+    sprintf( 'scale = 0' )
+elseif nargin == 8
+    opt.scale = scale;
+    opt.fgt = fgt_val;
+    sprintf( 'scale = %d', scale )
+else
+    error( 'insufficient args' )
 end
 
 C_r = [];
@@ -30,13 +38,15 @@ Transform_nonrigid = [];
 % Set the options for registration of the half-spheres
 opt.method='rigid'; % use rigid registration
 opt.viz=1;          % show every iteration
-opt.outliers=0.1;   % use 0.5 noise weight
+opt.outliers=0; %0.1;don't account for outliers   % use 0.5 noise weight
 
 opt.normalize=0; %1;    % normalize to unit variance and zero mean before registering (default)
-opt.scale=0; %1;        % estimate global scaling too (default)
+%opt.scale=1; %1;        % estimate global scaling too (default)
 opt.rot=0;         % estimate rotation, but with reflection
 opt.corresp=1;      % do not compute the correspondence vector at the end of registration (default). Can be quite slow for large data sets.
 
+opt.lambda = lambda;
+opt.beta = beta;
 opt.max_it= num_rigid_iters;     % max number of iterations
 opt.tol= 1e-10;       % tolerance
  
@@ -47,11 +57,8 @@ if num_rigid_iters > 0
 else
     scene_rigid_transform = scene_no_ground;
 end
-opt.fgt = 2;
-opt.method = 'nonrigid_lowrank';
-opt.tol = 1e-13;
-opt.lambda = lambda;%1;%10;%100;
-opt.beta = beta; %10;
+%opt.fgt = 0;
+opt.method = 'nonrigid'; %_lowrank';
 %%%%%%%%%%%%%%%%%%%%%opt.sigma = 10; %does not appear to be useful
 
 if num_nonrigid_iters > 0

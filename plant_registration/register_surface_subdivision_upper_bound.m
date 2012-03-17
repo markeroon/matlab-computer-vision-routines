@@ -2,33 +2,42 @@
 %registration.
 function [Y1,Y2,Y3] = ...
                     register_surface_subdivision_upper_bound( X,Y,iters_rigid,...
-                                                      iters_nonrigid )
+                                                      iters_nonrigid,lambda, beta, MIN_SIZE )
     
-[Y1,Y2,Y3] = registerPoints( X,Y,iters_rigid,iters_nonrigid );
+if nargin == 6
+    MIN_SIZE = min(size(X,1),size(Y,1)) / 20
+end
+[Y1,Y2,Y3] = registerPoints( X,Y,iters_rigid,iters_nonrigid,lambda, beta,MIN_SIZE );
 end    
  
-function [X__,Y__,Z__] = registerPoints( X,Y,iters_rigid,iters_nonrigid )   
-    MIN_SIZE = 50;
+function [X__,Y__,Z__] = registerPoints( X,Y,iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE )   
+    %MIN_SIZE = 60;
+    fgt = 0;
+    scale = 0;
     if size(X,1) > MIN_SIZE && size(Y,1) > MIN_SIZE
        
         [Y1_,Y2_,Y3_,tr,tnr,cr] = registerToReferenceRangeScan(X, Y, iters_rigid, ...                                                iters_rigid,...
                                                            iters_nonrigid,...
-                                                           1,...
-                                                           1 );
+                                                           lambda, beta, ...
+                                                           fgt, scale );
         min_x = min( [ X(:,1);Y1_ ] )
         max_x = max( [ X(:,1);Y1_ ] )
         min_y = min( [ X(:,2);Y2_ ] )
         max_y = max( [ X(:,2);Y2_ ] )
         min_z = min( [ X(:,3);Y3_ ] )  
-        max_z = max( [ X(:,3);Y3_ ] ) 
-        pad = 0.2;
+        max_z = max( [ X(:,3);Y3_ ] )
         
-        left_x   = min_x - abs(pad*min_x)
-        right_x  = max_x + abs(pad*max_x)
-        top_x    = max_y + abs(pad*max_y)
-        bottom_x = min_y - abs(pad*min_y)
-        back_x   = min_z - abs(pad*min_z)
-        front_x  = max_z + abs(pad*max_z)
+        width = sqrt( max_x^2 + min_x^2 )
+        height = sqrt( max_y^2 + min_y^2 )
+        depth = sqrt( max_z^2 + min_z^2 )
+        pad = 0.3;
+        
+        left_x   = min_x - pad*width
+        right_x  = max_x + pad*width
+        top_x    = max_y + pad*height
+        bottom_x = min_y - pad*height
+        back_x   = min_z - pad*depth
+        front_x  = max_z + pad*depth
         
         % this use of X co-ords as the dividing space is on purpose
         left_y   =  min_x %min(X(:,1))
@@ -66,14 +75,14 @@ function [X__,Y__,Z__] = registerPoints( X,Y,iters_rigid,iters_nonrigid )
         idx_y_110 = find( Y1_ >= m_width & Y2_ >= m_height & Y3_ < m_depth );
         idx_y_111 = find( Y1_ >= m_width & Y2_ >= m_height & Y3_ >= m_depth );
         
-        [Y1_000,Y2_000,Y3_000] = registerPoints( X(idx_x_000,:),[Y1_(idx_y_000),Y2_(idx_y_000),Y3_(idx_y_000)],iters_rigid,iters_nonrigid );
-        [Y1_001,Y2_001,Y3_001] = registerPoints( X(idx_x_001,:),[Y1_(idx_y_001),Y2_(idx_y_001),Y3_(idx_y_001)],iters_rigid,iters_nonrigid );
-        [Y1_010,Y2_010,Y3_010] = registerPoints( X(idx_x_010,:),[Y1_(idx_y_010),Y2_(idx_y_010),Y3_(idx_y_010)],iters_rigid,iters_nonrigid );
-        [Y1_011,Y2_011,Y3_011] = registerPoints( X(idx_x_011,:),[Y1_(idx_y_011),Y2_(idx_y_011),Y3_(idx_y_011)],iters_rigid,iters_nonrigid );
-        [Y1_100,Y2_100,Y3_100] = registerPoints( X(idx_x_100,:),[Y1_(idx_y_100),Y2_(idx_y_100),Y3_(idx_y_100)],iters_rigid,iters_nonrigid );
-        [Y1_101,Y2_101,Y3_101] = registerPoints( X(idx_x_101,:),[Y1_(idx_y_101),Y2_(idx_y_101),Y3_(idx_y_101)],iters_rigid,iters_nonrigid );
-        [Y1_110,Y2_110,Y3_110] = registerPoints( X(idx_x_110,:),[Y1_(idx_y_110),Y2_(idx_y_110),Y3_(idx_y_110)],iters_rigid,iters_nonrigid );
-        [Y1_111,Y2_111,Y3_111] = registerPoints( X(idx_x_111,:),[Y1_(idx_y_111),Y2_(idx_y_111),Y3_(idx_y_111)],iters_rigid,iters_nonrigid );
+        [Y1_000,Y2_000,Y3_000] = registerPoints( X(idx_x_000,:),[Y1_(idx_y_000),Y2_(idx_y_000),Y3_(idx_y_000)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
+        [Y1_001,Y2_001,Y3_001] = registerPoints( X(idx_x_001,:),[Y1_(idx_y_001),Y2_(idx_y_001),Y3_(idx_y_001)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
+        [Y1_010,Y2_010,Y3_010] = registerPoints( X(idx_x_010,:),[Y1_(idx_y_010),Y2_(idx_y_010),Y3_(idx_y_010)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
+        [Y1_011,Y2_011,Y3_011] = registerPoints( X(idx_x_011,:),[Y1_(idx_y_011),Y2_(idx_y_011),Y3_(idx_y_011)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
+        [Y1_100,Y2_100,Y3_100] = registerPoints( X(idx_x_100,:),[Y1_(idx_y_100),Y2_(idx_y_100),Y3_(idx_y_100)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
+        [Y1_101,Y2_101,Y3_101] = registerPoints( X(idx_x_101,:),[Y1_(idx_y_101),Y2_(idx_y_101),Y3_(idx_y_101)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
+        [Y1_110,Y2_110,Y3_110] = registerPoints( X(idx_x_110,:),[Y1_(idx_y_110),Y2_(idx_y_110),Y3_(idx_y_110)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
+        [Y1_111,Y2_111,Y3_111] = registerPoints( X(idx_x_111,:),[Y1_(idx_y_111),Y2_(idx_y_111),Y3_(idx_y_111)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
 
         X__ = [Y1_000; Y1_001 ; Y1_010 ; Y1_011 ; Y1_100 ; Y1_101 ; Y1_110 ; Y1_111 ]; 
         Y__ = [Y2_000; Y2_001 ; Y2_010 ; Y2_011 ; Y2_100 ; Y2_101 ; Y2_110 ; Y2_111 ];  
