@@ -8,12 +8,11 @@ function [Y1,Y2,Y3] = ...
 if nargin == 6
     MIN_SIZE = min(size(X,1),size(Y,1)) / 20
 end
-[Y1,Y2,Y3] = registerPoints( X,Y,iters_rigid,iters_nonrigid,lambda, beta,MIN_SIZE );
+fgt = 2;
+[Y1,Y2,Y3] = registerPoints( X,Y,iters_rigid,iters_nonrigid,lambda, beta,MIN_SIZE,fgt );
 end    
  
-function [X__,Y__,Z__] = registerPoints( X,Y,iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE )   
-    %MIN_SIZE = 60;
-    fgt = 0;
+function [X__,Y__,Z__] = registerPoints( X,Y,iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE,fgt )   
     scale = 0;
     if size(X,1) > MIN_SIZE && size(Y,1) > MIN_SIZE
        
@@ -31,7 +30,7 @@ function [X__,Y__,Z__] = registerPoints( X,Y,iters_rigid,iters_nonrigid,lambda, 
         width = sqrt( max_x^2 + min_x^2 )
         height = sqrt( max_y^2 + min_y^2 )
         depth = sqrt( max_z^2 + min_z^2 )
-        pad = 0.3;
+        pad = 0.1;
         
         left_x   = min_x - pad*width
         right_x  = max_x + pad*width
@@ -80,14 +79,15 @@ function [X__,Y__,Z__] = registerPoints( X,Y,iters_rigid,iters_nonrigid,lambda, 
         idx_y_110 = find( Y1_ >= m_width_y & Y2_ >= m_height_y & Y3_ < m_depth_y );
         idx_y_111 = find( Y1_ >= m_width_y & Y2_ >= m_height_y & Y3_ >= m_depth_y );
         
-        [Y1_000,Y2_000,Y3_000] = registerPoints( X(idx_x_000,:),[Y1_(idx_y_000),Y2_(idx_y_000),Y3_(idx_y_000)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
-        [Y1_001,Y2_001,Y3_001] = registerPoints( X(idx_x_001,:),[Y1_(idx_y_001),Y2_(idx_y_001),Y3_(idx_y_001)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
-        [Y1_010,Y2_010,Y3_010] = registerPoints( X(idx_x_010,:),[Y1_(idx_y_010),Y2_(idx_y_010),Y3_(idx_y_010)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
-        [Y1_011,Y2_011,Y3_011] = registerPoints( X(idx_x_011,:),[Y1_(idx_y_011),Y2_(idx_y_011),Y3_(idx_y_011)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
-        [Y1_100,Y2_100,Y3_100] = registerPoints( X(idx_x_100,:),[Y1_(idx_y_100),Y2_(idx_y_100),Y3_(idx_y_100)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
-        [Y1_101,Y2_101,Y3_101] = registerPoints( X(idx_x_101,:),[Y1_(idx_y_101),Y2_(idx_y_101),Y3_(idx_y_101)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
-        [Y1_110,Y2_110,Y3_110] = registerPoints( X(idx_x_110,:),[Y1_(idx_y_110),Y2_(idx_y_110),Y3_(idx_y_110)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
-        [Y1_111,Y2_111,Y3_111] = registerPoints( X(idx_x_111,:),[Y1_(idx_y_111),Y2_(idx_y_111),Y3_(idx_y_111)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE );
+        %make fgt = 0 for the smaller subdivisions
+        [Y1_000,Y2_000,Y3_000] = registerPoints( X(idx_x_000,:),[Y1_(idx_y_000),Y2_(idx_y_000),Y3_(idx_y_000)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE, 0 );
+        [Y1_001,Y2_001,Y3_001] = registerPoints( X(idx_x_001,:),[Y1_(idx_y_001),Y2_(idx_y_001),Y3_(idx_y_001)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE, 0 );
+        [Y1_010,Y2_010,Y3_010] = registerPoints( X(idx_x_010,:),[Y1_(idx_y_010),Y2_(idx_y_010),Y3_(idx_y_010)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE, 0 );
+        [Y1_011,Y2_011,Y3_011] = registerPoints( X(idx_x_011,:),[Y1_(idx_y_011),Y2_(idx_y_011),Y3_(idx_y_011)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE, 0 );
+        [Y1_100,Y2_100,Y3_100] = registerPoints( X(idx_x_100,:),[Y1_(idx_y_100),Y2_(idx_y_100),Y3_(idx_y_100)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE, 0 );
+        [Y1_101,Y2_101,Y3_101] = registerPoints( X(idx_x_101,:),[Y1_(idx_y_101),Y2_(idx_y_101),Y3_(idx_y_101)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE, 0 );
+        [Y1_110,Y2_110,Y3_110] = registerPoints( X(idx_x_110,:),[Y1_(idx_y_110),Y2_(idx_y_110),Y3_(idx_y_110)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE, 0 );
+        [Y1_111,Y2_111,Y3_111] = registerPoints( X(idx_x_111,:),[Y1_(idx_y_111),Y2_(idx_y_111),Y3_(idx_y_111)],iters_rigid,iters_nonrigid,lambda, beta, MIN_SIZE, 0 );
 
         X__ = [Y1_000; Y1_001 ; Y1_010 ; Y1_011 ; Y1_100 ; Y1_101 ; Y1_110 ; Y1_111 ]; 
         Y__ = [Y2_000; Y2_001 ; Y2_010 ; Y2_011 ; Y2_100 ; Y2_101 ; Y2_110 ; Y2_111 ];  

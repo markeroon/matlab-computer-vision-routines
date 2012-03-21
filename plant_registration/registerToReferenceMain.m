@@ -30,14 +30,18 @@ for i=1:11
         Y_dash = R*Y' + repmat(t,size(Y,1),1)';
         Y = Y_dash';
     end
+    
     iters_rigid = 30; % these two vars have no effect
     iters_nonrigid = 0;
     [X_new,Y_new,Z_new] = register_surface_subdivision_upper_bound( ...
                                                 X,Y,iters_rigid,iters_nonrigid );
 
-    X2{i} = X_new';%[ X0 X_new' ];
-    Y2{i} = Y_new';%[ Y0 Y_new' ];
-    Z2{i} = Z_new';%[ Z0 Z_new' ];
+    X2{i} = X_new';
+    Y2{i} = Y_new';
+    Z2{i} = Z_new';
+    
+    
+    
 end
 
 X3 = [X0 X2{1:11}];
