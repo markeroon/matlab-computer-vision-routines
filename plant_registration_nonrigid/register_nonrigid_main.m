@@ -1,8 +1,6 @@
-addpath( '../third_party/gmmreg-read-only/' );
 addpath( '../file_management/' );
-addpath( genpath( '../third_party/CoherentPointDrift' ) );
+addpath( genpath( '../third_party/CPD2' ) );
 addpath( '../plant_registration' );
-addpath( '../PointCloudGenerator/' );
 rms_e_all = [];
 R =  [ 0.9101   -0.4080    0.0724 ;
        0.4118    0.8710   -0.2681 ;
@@ -13,7 +11,7 @@ t = [ 63.3043,  234.5963, -46.8392 ];
 filename_0 = sprintf( '~/Data/PlantDataPly/plants_converted82-%03d-clean-clear-reduced.ply', 0 );
 [Elements_0,varargout_0] = plyread(filename_0);
 X = [Elements_0.vertex.x';Elements_0.vertex.y';Elements_0.vertex.z']';
-%X = X(1:40:end,:); % subset for testing
+%X = X(1:10:end,:); % subset for testing
 Y_reg_all = [];
 for q=1:11
 filename_1 = sprintf( '~/Data/PlantDataPly/plants_converted82-%03d-clean-clear-reduced.ply', q );
@@ -27,18 +25,23 @@ end
 
 
 
-%Y = Y(1:40:end,:); %subset for testing
+%Y = Y(1:10:end,:); %subset for testing
 
-iters_rigid = 50;
-iters_nonrigid = 0;
-lambda = 1;
-beta = .1; %possible that less than this is too much ram
-min_size = 400;
+%opt.max_it = 40;
+opt.rotation = 1;
+opt.scale = 0;
+opt.normalize = 1;
+opt.fgt = 2;
+%opt.lambda = 1;
+%opt.beta = .1; %possible that less than this is too much ram
+min_size = 120;
 Yr_subdiv = ones(size(Y));
 
-[Yr_subdiv(:,1),Yr_subdiv(:,2),Yr_subdiv(:,3)] = register_surface_subdivision_upper_bound( ...
-                                           X,Y,iters_rigid,iters_nonrigid,...
-                                           lambda,beta, min_size );
+[Yr_subdiv(:,1),Yr_subdiv(:,2),Yr_subdiv(:,3)] =  ...      
+                        registerRecursive( X,Y,opt,min_size );
+                    %  register_surface_subdivision_upper_bound( ...
+                    %                       X,Y,iters_rigid,iters_nonrigid,...
+                    %                       lambda,beta, min_size );
                                        
 [neighbour_id,neighbour_dist] = kNearestNeighbors(X, Yr_subdiv, 1 );
 % get nearest neighbour for each point in the original cloud in the
