@@ -35,7 +35,7 @@ opt.normalize = 1;
 opt.fgt = 2;
 %opt.lambda = 1;
 %opt.beta = .1; %possible that less than this is too much ram
-min_size = 500;
+min_size = 700;
 Yr_subdiv = ones(size(Y));
 
 [Yr_subdiv(:,1),Yr_subdiv(:,2),Yr_subdiv(:,3)] =  ...      
@@ -48,7 +48,7 @@ Yr_subdiv = ones(size(Y));
 % get nearest neighbour for each point in the original cloud in the
 % matched cloud
 filename = sprintf( '../../Data/Yr_subdiv%02d-%s.mat',[q datestr(now,'dd.mm.yy.HH.MM') ] )
-save( Yr_subdiv,filename )
+save(filename,'Yr_subdiv');
 neighbour_id_unique = unique(neighbour_id);
 Yr_subdiv = [];
 X_reg = ones(size(X(neighbour_id_unique,:)));
