@@ -1,0 +1,26 @@
+function [ x_corrupt,y_corrupt,z_corrupt] = addNoisyPoints( X,Y,Z )
+% can add noise on interval [a,b] using the following
+% r = a + (b-a).*rand(100,1);
+
+x_a = min( X );
+x_b = max( X );
+y_a = min( Y );
+y_a = max( Y );
+z_a = min( Z );
+z_b = max( Z );
+
+%dx = (x_max - x_min) / N;
+%dy = (y_max - y_min) / N;
+%dz = (z_max - z_min) / N;
+
+x_min = x_min - 10*dx; 
+x_max = x_max + 10*dx;
+y_min = y_min - 10*dy; 
+y_max = y_max + 10*dy;
+z_min = z_min - 10*dz; 
+z_max = z_max + 10*dz;
+%[x,y,z] = meshgrid( x_min:dx:x_max,y_min:dy:y_max,z_min:dz:z_max );
+
+X_r = X_a + (X_b-X_a).*rand(100,1);
+Y_r = Y_a + (Y_b-Y_a).*rand(100,1);
+Y_r = Y_a + (Y_b-Y_a).*rand(100,1);

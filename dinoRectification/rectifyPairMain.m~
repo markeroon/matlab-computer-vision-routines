@@ -1,0 +1,33 @@
+addpath( '~/Code/third_party/RectifKitE/' );
+addpath( '~/Code/file_management/' );
+addpath( '~/Code/third_party/stereoflowlinux/' );
+
+I_ref = imread( '~/Data/dinoRing/dinoR0001.png' );
+%IL = imread( '~/Data/dinoRing/dinoR0013.png' );
+%IR = imread( '~/Data/dinoRing/dinoR0014.png' );
+
+[a,P,numImages] = dinoFileRead( '~/Data/dinoRing/dinoR_par.txt' );
+
+pm_ref = P{1};
+%pml = P{13};
+%pmr = P{14};
+
+range = [3 ;
+bestshiftsLCell = cell(size(range,2),1);
+
+for i = range
+    fileL = sprintf( '~/Data/dinoRing/dinoR%04d.png', i );
+    fileR = sprintf( '~/Data/dinoRing/dinoR%04d.png', i+1 );
+    IL = imread( fileL );
+    IR = imread( fileR );
+
+    pml = P{i};
+    pmr = P{i+1};
+
+    [ JL,JR ] = warpPairToReferenceFrame( I_ref,pm_ref,IL,pml,IR,pmr );
+
+    shiftrange = [-85:85];
+   % [bestshiftsL, occlL, bestshiftsR, occlR] = stereoCorrespond(JL, JR, shiftrange);
+    
+    %bestshiftsLCell{i} = bestshiftsL; 
+end

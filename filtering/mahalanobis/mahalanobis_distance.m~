@@ -1,0 +1,7 @@
+function [dist_m] = mahalanobis_distance( X,Y )
+    
+    D = repmat( X,size(Y,1),1) - Y;
+    H = D * D'
+    H_inv = inv(H);
+    
+end

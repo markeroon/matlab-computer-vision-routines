@@ -1,0 +1,106 @@
+addpath( '../file_management' );
+addpath( genpath( 'third_party/coherent_point_drift/' ) ); % add subdirs
+%addpath( 'third_party/finite_icp/' );
+%addpath( '~/Code/filtering/mahalanobis/' );
+%addpath( '~/Code/PointCloudGenerator' );
+
+X2 = cell(6,1);
+Y2 = cell(6,1);
+Z2 = cell(6,1);
+j=1;
+for i=1:2:11
+    filename_0 = sprintf( '../../Data/PlantDataOFF/plants_converted001_clean.off
+    %filename_0 = sprintf( '~/Data/PiFiles/20100204-000050-%03d.3pi', i-1 );
+    %[X0,Y0,Z0,gray_val_0] = import3Pi( filename_0 );
+    
+    % remove ground plane
+    
+    %idx_x = find( Z0 < 620 );
+    %X_rest = [X0(idx_x)', Y0(idx_x)', Z0(idx_x)' ];
+    X_rest = [X0', Y0', Z0' ];
+
+    X = [X0',Y0',Z0'];
+    
+    %filename_1 = sprintf( '~/Data/PiFiles/20100204-000050-%03d.3pi', i )
+    %[X1,Y1,Z1,gray_val_1] = import3Pi( filename_1 );
+    % remove ground plane
+
+    %idx_y = find( Z1 < 620 );
+    % sans ground plane    
+    %Y_rest = [X1(idx_y)', Y1(idx_y)', Z1(idx_y)' ];
+    Y_rest = [X1', Y1', Z1' ];
+    
+    Y = [X1',Y1',Z1'];
+    
+    R =  [ 0.9101   -0.4080    0.0724 ;
+            0.4118    0.8710   -0.2681 ;
+              0.0463    0.2738    0.9607 ]
+    t = [ 63.3043,  234.5963, -46.8392 ];
+    
+    % transform once for each scan that we've registered
+    Y_dash = R*Y_rest' + repmat(t,size(Y_rest,1),1)';
+    Y_rest = Y_dash';
+    
+    iters_rigid = 35;
+    iters_nonrigid = 35;
+    [X_new,Y_new,Z_new] = register_surface_subdivision_upper_bound( ...
+                                                X_rest,Y_rest,iters_rigid,iters_nonrigid );
+
+    X2{j} = [ X0 X_new' ];
+    Y2{j} = [ Y0 Y_new' ];
+    Z2{j} = [ Z0 Z_new' ];                                            
+%    X2{j} = [ X0(idx_x) X_new' ];
+%    Y2{j} = [ Y0(idx_x) Y_new' ];
+%    Z2{j} = [ Z0(idx_x) Z_new' ];
+
+    j=j+1;
+end
+X3 = cell(4,1);
+Y3 = cell(4,1);
+Z3 = cell(4,1);
+j=1;
+for i=1:2:6
+   X = [X2{i}',Y2{i}',Z2{i}'];
+   Y = [X2{i+1}',Y2{i+1}',Z2{i+1}'];
+   for z=1:2
+       Y_dash = R*Y' + repmat(t,size(Y,1),1)';
+       Y = Y_dash';
+   end
+   [X_new,Y_new,Z_new] = register_surface_subdivision_upper_bound( ...
+                                           X,Y,iters_rigid,iters_nonrigid );
+   X3{j} = [X2{i} X_new'];
+   Y3{j} = [Y2{i} Y_new'];
+   Z3{j} = [Z2{i} Z_new'];
+   j=j+1;
+end
+
+X4 = cell(2,1);
+Y4 = cell(2,1);
+Z4 = cell(2,1);
+j=1;
+for i=1:2:3
+   X = [X3{i}',Y3{i}',Z3{i}'];
+   Y = [X3{i+1}',Y3{i+1}',Z3{i+1}'];
+   for z=1:4
+       Y_dash = R*Y' + repmat(t,size(Y,1),1)';
+       Y = Y_dash';
+   end
+   [X_new,Y_new,Z_new] = register_surface_subdivision_upper_bound( ...
+                                           X,Y,iters_rigid,iters_nonrigid );
+   X4{j} = [X3{i} X_new'];
+   Y4{j} = [Y3{i} Y_new'];
+   Z4{j} = [Z3{i} Z_new'];
+   j=j+1;
+end
+X = [X4{1}',Y4{1}',Z4{1}'];
+Y = [X3{3}',Y3{3}',Z3{3}'];
+for z=1:6
+   Y_dash = R*Y' + repmat(t,size(Y,1),1)';
+   Y = Y_dash';
+end
+[X_new,Y_new,Z_new] = register_surface_subdivision_upper_bound( ...
+                                           X,Y,iters_rigid,iters_nonrigid );
+X5 = [X4{1} X_new'];
+Y5 = [Y4{1} Y_new'];
+Z5 = [Z4{1} Z_new'];
+%exportOffFile(X5,Y5,Z5,'~/Data/plants_12.off' );

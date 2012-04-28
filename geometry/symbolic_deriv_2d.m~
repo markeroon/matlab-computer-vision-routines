@@ -1,0 +1,4 @@
+syms x y a b r theta
+x_dash = ((x - a)*cos(theta) + (y-b)*sin(theta) ) / r
+diff( x_dash, x )
+

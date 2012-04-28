@@ -1,0 +1,72 @@
+function [shape_dist,dalpha_dt] = register_surface( phi,psi0,alpha,beta,gamma,a,b,c,r,X,Y,Z )    
+    x_min = min(X(:));
+    x_max = max(X(:));
+    y_min = min(Y(:));
+    y_max = max(Y(:));
+    z_min = min(Z(:));
+    z_max = max(Z(:));
+
+    %[Hphi_x,Hphi_y,Hphi_z] = gradient(heaviside(phi)); % will need to add dx,dy,dz
+    %shape_dist = psi0 .* sqrt( Hphi_x.^2 + Hphi_y.^2 + Hphi_z.^2 );
+    delta_x = 1;
+    Hpsi0 = heaviside_im(psi0,delta_x);
+    Hphi = heaviside_im(phi,delta_x);
+    dirac_psi = dirac_im(psi0,delta_x);%dirac_im(psi,delta_x);
+    
+    Hpsi_sub_Hphi = Hpsi0 - Hphi;
+    
+    %dalpha_dt_vol = ones(size(psi0));
+    [psi0_x,psi0_y,psi0_z] = gradient( psi0 ); % add dx,dy,dz    
+    dalpha_dt_rhs = ones(size(psi0));
+    %dpsi0_dxdash_dalpha = ones(size(psi0));
+    for i=1:size(phi,1)
+    for j=1:size(phi,2)
+    for k=1:size(phi,3)
+        x = X(i,j,k);
+        y = Y(i,j,k);
+        z = Z(i,j,k);
+        
+        dxdash_dalpha = 0;
+        dydash_dalpha =  -((sin(alpha)*sin(gamma) + cos(alpha)*cos(gamma)*sin(beta))*(a - x) - ...
+            (cos(gamma)*sin(alpha) - cos(alpha)*sin(beta)*sin(gamma))*(b - y) + cos(alpha)*cos(beta)*(c - z))/r;
+        dzdash_dalpha = ((cos(alpha)*cos(gamma) + sin(alpha)*sin(beta)*sin(gamma))*(b - y) - ...
+            (cos(alpha)*sin(gamma) - cos(gamma)*sin(alpha)*sin(beta))*(a - x) + cos(beta)*sin(alpha)*(c - z))/r;
+        
+        R_alpha = ...
+            [ 1, 0, 0 ;
+            0 ,cos(alpha) ,sin(alpha); 
+            0 ,-sin(alpha), cos(alpha) ]; 
+        R_beta = ... 
+            [ cos(beta), 0, -sin(beta);
+            0, 1,          0;
+            sin(beta), 0,  cos(beta)]; 
+        R_gamma = ...
+            [ cos(gamma), sin(gamma), 0 ;
+            -sin(gamma), cos(gamma), 0;
+            0 ,  0  , 1];
+        
+        R_alphabetagamma = R_alpha * R_beta * R_gamma;
+
+        x_y_z_dash = ( R_alphabetagamma * [ x - a; y - b; z - c] ) / r;
+        x_dash = x_y_z_dash(1);
+        y_dash = x_y_z_dash(2);
+        z_dash = x_y_z_dash(3);
+        
+        % \psi_0_x( x',y',z')
+        if x_dash >= x_min && x_dash <= x_max && y_dash >= y_min ...
+            && y_dash <= y_max && z_dash >= z_min && z_dash <= z_max
+                psi0_x_at_xyz_dash = interp3( X,Y,Z,psi0_x,x_dash,y_dash,z_dash );
+                psi0_y_at_xyz_dash = interp3( X,Y,Z,psi0_y,x_dash,y_dash,z_dash );
+                psi0_z_at_xyz_dash = interp3( X,Y,Z,psi0_z,x_dash,y_dash,z_dash );
+                
+                dalpha_dt_rhs(i,j,k) = psi0_x_at_xyz_dash * dxdash_dalpha + ...
+                        psi0_y_at_xyz_dash * dydash_dalpha + ...
+                        psi0_z_at_xyz_dash * dzdash_dalpha;
+        end
+    end
+    end
+    end
+    dalpha_dt_vol = Hpsi_sub_Hphi .* dalpha_dt_rhs .* Hpsi_sub_Hphi .* dirac_psi;
+    dalpha_dt = sum(dalpha_dt_vol(:));
+    
+end

@@ -1,0 +1,30 @@
+function [phi,d_mag,H,dphidt] = convect2d( phi, d,delta_t, n_iters,...
+                                    grad_weight,curvature_weight )
+    %d_max = 1.0;
+    %backup_phi = cell(n_iters,1);
+    phi = ac_reinit(phi);
+    phi = reinitBoundaries( phi );
+    
+    for i = 1:n_iters
+        i
+        %if mod( i,10 ) == 0
+            phi = ac_reinit(phi);
+        %end
+        [phi_y,phi_x] = gradient( phi );
+        [d_y,d_x] = gradient(d);
+        d_mag = sqrt( d_y.^2 + d_x.^2 );
+        
+        nabla_dnabla_phi = (phi_x.*d_x + phi_y.*d_y);
+        H = div2d(phi);
+               
+        %dphidt = d.*phi;  % this would never move -- phi == 0, DUHH!
+        %phi = phi + dphidt * delta_t;
+        
+        dphidt =  grad_weight*nabla_dnabla_phi + curvature_weight*d_mag.*H;%max(d_mag,d_max).*H;
+        %dphidt =  grad_weight*nabla_dnabla_phi + curvature_weight*d.*H;%max(d_mag,d_max).*H;
+
+        phi = phi + dphidt*delta_t;
+        %backup_phi{i,1} = phi;
+    end
+    phi = reinitBoundaries(phi);
+end

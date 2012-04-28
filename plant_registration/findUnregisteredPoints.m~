@@ -1,0 +1,13 @@
+function [X_unreg] = findUnregisteredPoints( X,Y,threshold_dist )
+%FINDUNREGISTEREDPOINTS Return points in X that don't fit Y 
+%sufficiently well
+
+X_unreg = [];
+for i=1:size(X,1)
+       [id,dist] = findNeighboursWithinRadius( X(i,:),Y,threshold_dist );
+       if ~isempty( id ), X_unreg = [X_unreg X(i,:)]; end
+       
+end
+
+end
+

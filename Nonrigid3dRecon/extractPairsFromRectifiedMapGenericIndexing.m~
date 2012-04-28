@@ -1,0 +1,36 @@
+function [ x_vec,y_vec,x_dash_vec,y_dash_vec ] =  ...
+    extractPairsFromRectifiedMapGenericIndexing( silhouetteIm,bestshiftsL,x,y )
+% EXTRACTPAIRSFROMRECTIFIEDDISPARITYMAP extract left and right 
+% corresponding % points from disparity map all returned parameters are 
+% num_pixels x 1 vectors
+
+usable_pixel = silhouetteIm;
+num_pixels = sum(usable_pixel(:) == 1);
+x_vec = ones(num_pixels,1);
+y_vec = ones(num_pixels,1);
+x_dash_vec = ones(num_pixels,1);
+y_dash_vec = ones(num_pixels,1);
+idx = 1;
+for j=1:size( silhouetteIm,2 )
+    for i=1:size( silhouetteIm,1 )
+        if silhouetteIm(i,j) == 1
+            x_vec(idx) = x(i,j);
+            x_dash_vec(idx) = x(i,j) + bestshiftsL(i,j);
+            y_vec(idx) = y(i,j);
+            y_dash_vec(idx) = y(i,j);
+            idx = idx+1;
+        end        
+    end
+end
+
+idx_im = find( silhouetteIm == 1 );
+x_vec_vectorized = x;
+x_vec_vectorized = x_vec_vectorized(idx_im);
+
+
+x_dash_vec_vectorized = x + bestshiftsL;
+x_dash_vec_vectorized = x_dash_vec_vectorized(idx_im);
+
+
+end
+

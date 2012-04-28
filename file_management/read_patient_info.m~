@@ -1,0 +1,11 @@
+function [ a,b,c,d ] = read_patient_info( propagation_list_filename )
+%READ_PATIENT_INFO Reads patient data regarding staple position and
+% gtv locations from a txt file
+    
+    fid = fopen( propagation_list_filename,'r' );
+    [a,b] = textscan(fid,'%s %d',21,'delimiter','''')
+    [c,d] = textscan(fid,'%s %s \','delimiter','''')
+    %[c,d]=textscan(fid,'%s%d','delimiter','''')
+    fclose(fid);
+end
+

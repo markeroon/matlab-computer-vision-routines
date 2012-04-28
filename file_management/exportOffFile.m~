@@ -1,0 +1,9 @@
+function [A] = exportOffFile( X1,X2,X3  )
+%EXPORTOFFFILE Takes points and exports them to a .off file
+
+    num_points = max( size(X1) );
+    A = [X1 X2 X3];
+    
+
+end
+

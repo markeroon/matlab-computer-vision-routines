@@ -1,0 +1,3 @@
+All code tested on Matlab 2008b.  The Coherent Point Drift and
+Finite ICP classes exist here; their licenses appear permissive
+enough to do so.

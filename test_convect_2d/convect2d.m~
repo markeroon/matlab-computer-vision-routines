@@ -1,0 +1,61 @@
+points = ones( 100,100 );
+points(30,30) = 0;
+points(30,60) = 0;
+points(30,90) = 0;
+points(60,30) = 0;
+points(60,60) = 0;
+points(60,90) = 0;
+dist_im = bwdist( ~points );
+imagesc(dist_im)
+phi = ones( size(dist_im,1) + 6, size(dist_im,2) + 6 );
+addpath( '~/ComputerScience/AOSLevelSetSegmentationToolbox/' );
+phi = ac_SDF_2D( 'rectangle', [106 106], 12 );
+imagesc(phi)
+%[d_y,d_x] = gradient( dist_im );
+d_x  = (dist_im(3:end,:) - dist_im(1:end-2,:))/2/dx;
+d_y  = (dist_im(:,3:end) - dist_im(:,1:end-2))/2/dy;
+
+velocity{1} = d_x; %./ (1 + dist_im);
+velocity{2} = d_y; %./ (1 + dist_im);
+
+Nx = 100; Ny = 100;
+
+ghostcell_width = 3;
+dX = [1. 1.];
+spatial_derivative_order = 5;
+
+% set up time integration parameters
+cfl_number = 0.4;
+%dt = cfl_number/(abs(V_x)/dx+abs(V_y)/dy);
+dt = 0.001;
+t_start = 0;
+t_end = 4;
+
+% initialize time
+t_cur = t_start;
+
+addpath( '/usr/local/lib/lsmlib-matlab/LSMLIB/' );
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% main time integration loop for TVD RK1 (forward euler)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+while (t_cur < t_end)
+
+  % fill boundary cells 
+  phi(1:ghostcell_width,:) = ...
+    phi(Ny+1:ghostcell_width+Ny,:);
+  phi(Ny+ghostcell_width+1:end,:) = ...
+    phi(ghostcell_width+1:2*ghostcell_width,:);
+  phi(:,1:ghostcell_width) = ...
+    phi(:,Nx+1:ghostcell_width+Nx);
+  phi(:,Nx+ghostcell_width+1:end) = ...
+    phi(:,ghostcell_width+1:2*ghostcell_width);
+
+  % advance level set function
+  phi = advancePhiTVDRK1(phi, velocity, ghostcell_width, ...
+                         dX, dt, cfl_number, spatial_derivative_order);
+
+  % update current time
+  t_cur = t_cur + dt
+end
+contour( phi,[0 0])

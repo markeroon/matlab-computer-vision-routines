@@ -1,0 +1,48 @@
+function [roc_x,roc_y] = getRocCurves( f,detection_reference )
+%GETROCCURVES D
+%   detection_reference has value '1' for each inlier, and '0' for each
+%   outlier. Typically of form f = [ 1 ... 1 0 ... 0 ], i.e. outliers
+%   at the end, but this isn't a requirement
+
+% now check detection algorithm
+detection_reference = zeros(size(f_var_band_norm));
+detection_reference(size(X,2)+1:end) = 1;
+%detection_reference(1:freq:end) = 1;
+
+thresh_max = max( f .* detection_reference );
+
+roc_x = [];
+roc_y = [];
+true_positive_detect = 1;
+while true_positive_detect > 0
+    detection_result = f_var_band_norm < thresh_max;
+    thresh_max = thresh_max - 0.00001;
+    
+    actual_normal_class = ~detection_reference;
+    actual_outlier_class = detection_reference;
+    
+    
+    
+    true_positive_detect =  sum( detection_reference == 1 & detection_result == 1 );
+    false_negative_detect = sum( detection_reference == 1 & detection_result == 0 );   
+    
+    false_positive_detect =  sum( detection_reference == 0 & detection_result == 1 );
+    true_negative_detect  =  sum( detection_reference == 0 & detection_result == 0 );
+    
+    detect_rate = true_positive_detect / (true_positive_detect + false_negative_detect );
+    false_alarm_rate = false_positive_detect / ( false_positive_detect + true_negative_detect );
+    roc_x = [roc_x detect_rate];
+    roc_y = [roc_y false_alarm_rate];
+end
+
+A = [roc_y' , roc_x' ];
+filename = sprintf( 'roc_curves_k_%d.txt', k );
+f_out = fopen( filename, 'w' );
+fprintf( f_out, '%d %d\n', A' );
+fclose( f_out );
+
+end
+
+
+end
+

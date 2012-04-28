@@ -1,0 +1,21 @@
+function [X1_vec,X2_vec,X3_vec] = removeVoxelsOutsideVisualHull( ...
+            X1_vec,X2_vec,X3_vec,silhouettes,P )
+    bad_silhouettes = [6];
+    num_points = max( size( X1_vec ) );
+    num_images = max( size( P ) );
+    for i = 1:num_points
+        for idx = 1:num_images
+            X_i = [X1_vec(i) ; X2_vec(i) ; X3_vec(i) ; 1 ];
+            x_i = projectToImage( P{idx},X_i );
+            bad_sil = contains( bad_silhouettes,idx );
+            % not in silhouette
+            if( ~bad_sil && projectsToImage(x_i) ...
+                    && (~(silhouettes{idx,1}(x_i(2,1),x_i(1,1)) == 1)) )
+                
+            end
+            if( ~projectsToImage( x_i ) )
+                visualHull(p,q,r) = 1;
+            end
+        end
+        
+    end

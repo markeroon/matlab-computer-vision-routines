@@ -1,0 +1,11 @@
+% FUNCTION U = AC_GAC_MODEL(G, U, COUNTOUR_WEIGHT, EXPANSION_WEIGHT, ...
+%    DELTA_T, N_ITERS, SHOW_RESULT)
+% AOS solver for geodesic active contour (GAC) model. The GAC PDE is
+% u_t = \alpha * div(g \nabla u / |\nabla u|)|\nabla u| + \beta g |\nabla u|.
+
+function phi = ac_bounded_GAC_model(g, phi, countour_weight, expansion_weight, ...
+    delta_t, n_iters, show_result)
+    
+
+
+end

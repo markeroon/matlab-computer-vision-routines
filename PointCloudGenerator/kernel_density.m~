@@ -1,0 +1,5 @@
+%KERNEL_DENSITY Returns the zero-mean Gaussian with unit standard dev
+% l2_norm_x - the distance between point x and a nearest neig
+function [K_x] = kernel_density( l2_norm_x,dim )
+    K_x = 1/(2*pi)^dim * exp( -l2_norm_x / 2 );
+end

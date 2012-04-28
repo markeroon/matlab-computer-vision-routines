@@ -1,0 +1,31 @@
+function [ x,y,z,vol ] = backproject( P_l, P_r, bestShiftsR, im_l, im_r )
+%BACKPROJECT take depth map and backproject it into volume
+
+delta_x = 0.001;    delta_y = 0.001;    delta_z = 0.001;
+%(-0.021897 0.021126 -0.017845)
+%(0.050897 0.108227 0.055495)
+[y,x,z] = meshgrid( 0.021126:delta_y:0.108227, ...
+                    -0.021897:delta_x:0.05089, ...
+                    -0.017845:delta_z:0.055495 );
+                
+vol = zeros(size(x));
+proj_l = Projection( P_l, im_l );
+proj_r = Projection( P_r, im_r );
+for i = 1:size(vol,1)
+    for j = 1:size(vol,2)
+        for k=1:size(vol,3)
+            X_i = [ x(i,j,k) ; y(i,j,k) ; z( i,j,k) ; 1.0 ];
+            x_l = projectToImage( proj_l,X_i );
+            x_r = projectToImage( proj_r,X_i );
+            if projectsToImage( proj_l,x_l ) && projectsToImage( proj_r,x_r) && ...
+                AlmostEqual(x_l(2),x_r(2)) && ...
+                AlmostEqual(x_l(1),x_r(1) + bestShiftsR(round(x_l(1)),round(x_l(1))))
+                        vol(i,j,k) = 1;
+            end
+        end
+    end
+end
+                
+
+end
+

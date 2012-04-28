@@ -1,0 +1,93 @@
+%KERNEL_DENSITY_ESTIMATE
+%k number of nearest neighbours to use
+% can formulate X_vec using X_vec = [ X1_vec', X2_vec', X3_vec' ];
+% index is the row vector for which we will calculate the kernel density
+function [f_var_band,f_fixed_band,f_var_mah_denom,f_var_mah_no_denom,f_reach] = ...
+    kernel_density_est_mahal_fast( X_vec,radius,n )
+
+dim = size( X_vec,2 );
+if size(X_vec,1) < dim
+    error( 'dims are wrong, input X_vec^T' )
+end
+
+f_reach = ones(size(X_vec,1),1);
+f_var_band = ones(size(X_vec,1),1);
+f_fixed_band = ones(size(X_vec,1),1);
+f_var_mah_denom = ones(size(X_vec,1),1);
+f_var_mah_no_denom = ones(size(X_vec,1),1);
+[mahal_dist,id,norm_cov] = getMahalDistOfAllPoints( X_vec,radius );
+for i = 1:size(X_vec,1)
+   [f_var_band(i),f_fixed_band(i),f_var_mah_denom(i),f_var_mah_no_denom(i),f_reach(i)] = ...
+                kernel_density_est_mahal_fast_i( mahal_dist,id,norm_cov,i,n,dim ); 
+end
+
+end
+
+function [f_var_band,f_fixed_band,f_var_mah_denom,f_var_mah_no_denom,f_reach] = ...
+    kernel_density_est_mahal_fast_i( mahal_dist_neighbour,neighbour_id,norm_cov_all,index,n,dim )
+
+f_reach = 0;
+f_fixed_band = 0;
+f_var_band = 0;
+f_var_mah_denom = 0;
+f_var_mah_no_denom = 0;
+id = neighbour_id{index};
+mahal_dist = mahal_dist_neighbour{index};
+norm_cov = norm_cov_all{index};
+if size(id,1) >= 25
+    for i=2:size(id,1) 
+        %[id_j] = neighborsWithinRadius( X_vec,X_vec(id(i),:),radius ); 
+        
+        %[dist_mahal_j] = cvMahaldist( X_vec(id(i),:)',X_vec(id_j,:)' );
+        %dist_mahal_j_n = sort( dist_mahal_j, 'ascend' );        
+        
+        %[id_n,dist_n] = kNearestNeighbors( X_vec(id,:),X_vec(id(i),:),n);
+        %h_x = dist_n(n);
+        dist_mahal_j = mahal_dist_neighbour{ id(i) };
+        dist_mahal_j_n = sort( dist_mahal_j, 'ascend' ); 
+        f_reach = f_reach + 1/((2*pi)^(dim/2)*(dist_mahal_j_n(n))^dim*sqrt(norm_cov)) *exp(-(max(mahal_dist(1,i),dist_mahal_j_n(n))^2) / (2*dist_mahal_j_n(n)^2) );
+        % RE-ADD COVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+        f_var_mah_denom = f_var_mah_denom + 1/((2*pi)^(dim/2)*(dist_mahal_j_n(n))^dim*sqrt(norm_cov)) *exp(-mahal_dist(1,i)^2 / (2*dist_mahal_j_n(n)^2) );
+        f_var_mah_no_denom = f_var_mah_no_denom + 1/((2*pi)^(dim/2)*(dist_mahal_j_n(n))^dim*sqrt(norm_cov)) *exp(-mahal_dist(1,i)^2 );
+        %f_var_band = f_var_band + 1/((2*pi)^(dim/2)*(dist_n(n))^dim*sqrt(norm_cov)) *exp(-dist_mahal(1,i)^2 * radius / dist_n(n) );
+        f_fixed_band = f_fixed_band + 1/((2*pi)^(dim/2)) * exp( -1 * (mahal_dist(1,i)^2) );
+    end
+    % 1/m
+    f_var_mah_no_denom = f_var_mah_no_denom/ (size(id,1)-1);
+    f_var_mah_denom = f_var_mah_denom / (size(id,1)-1);
+    f_fixed_band = f_fixed_band / (size(id,1)-1);
+    f_var_band = f_var_band / (size(id,1)-1);
+    %f_fixed_h = f_fixed_h / (size(id,1)-1);
+
+else
+    %f = 0.0000000002;
+    f_var_mah_no_denom = 0.000000002;
+    f_var_mah_denom = 0.000000002;
+    f_fixed_band =    0.000000002;
+    f_var_band =      0.000000002;
+end
+end
+
+function [mahal_dist,id,norm_cov] = getMahalDistOfAllPoints( X_vec,radius )
+sprintf('getting mahalanobis distance of all points...\n')
+mahal_dist = cell(size(X_vec,1),1);
+id         = cell(size(X_vec,1),1);
+norm_cov   = cell(size(X_vec,1),1);
+for index=1:size(X_vec,1)
+    [mahal_dist{index},id{index},norm_cov{index}] = getMahalDistInsideRadius( X_vec,index,radius );
+    %size(id{index})
+    if mod(index,1000) == 0        
+        sprintf( '%d percent done', index/size(X_vec,1)*100 )
+    end        
+end
+sprintf('done')
+end
+
+function [dist_mahal,id,norm_cov] = getMahalDistInsideRadius( X_vec,index,radius )
+
+id = neighborsWithinRadius( X_vec, X_vec(index,:), radius );
+Y = X_vec(index,:);
+X = X_vec(id,:);    
+[dist_mahal,norm_cov] = cvMahaldist(Y',X'); %will have to add norm_cov
+
+end

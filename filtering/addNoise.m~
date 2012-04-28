@@ -1,0 +1,13 @@
+function [ x_corrupt,y_corrupt,z_corrupt] = addNoise( X,Y,Z )
+%ADDNOISE Corrupts a subset of the measured points
+    
+    X_corrupt
+
+    noisy_signal_x = x + 0.4*randn(size(X));
+    noisy_signal_y = y + 0.4*randn(size(X));
+    noisy_signal_z = z + 0.4*randn(size(X));
+
+    x_corrupt( 1:10:end ) = noisy_signal_x(1:10:end);
+    y_corrupt( 1:10:end ) = 
+end
+

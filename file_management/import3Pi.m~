@@ -1,0 +1,10 @@
+% import3Pi
+
+fid = fopen( '~/Data/PiFiles/20100204-000008-001.3pi','r' );
+A1 = fscanf( fid, '#3PI file Copyright(C) 1997-2001 ShapeGrabber Incorporated\n', [1 1] )
+A2 = fscanf( fid, '#:Number of Points per Profiles: %d\n', [1 1] )
+A3 = fscanf( fid, '#:Number of Profiles: %d\n', [1 1] )
+A4 = fscanf( fid, '#:Pose Transformation:\n', [1 1] )
+A5 = fscanf( fid, '#    %f %f %f %f\n', [4 inf] )
+
+while i < A

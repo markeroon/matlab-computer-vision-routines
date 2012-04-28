@@ -1,0 +1,44 @@
+addpath( '~/Code/PointCloudGenerator/' );
+addpath( '~/Code/filtering/mahalanobis/' );
+
+clear
+dx = 0.01;
+dy = 0.01;
+%x = [-2*pi:dx:2*pi];
+x = [-2*pi:dx:-1.5*pi];
+num_signal_points = size(x,2);
+x = x';
+y = sin( x );
+N = 6 * size(y,1);
+[x_corrupt,y_corrupt] = addNoisyPoints2D( x',y',N,dx,dy );
+
+x = x_corrupt';
+y = y_corrupt';
+
+n = 4;%25;
+radius = .1;
+f = zeros(size(y,1),1);
+f_reach = zeros(size(y,1),1);
+f_fixed_h = zeros(size(y,1),1);
+f_no_denom = zeros(size(y,1),1);
+%h = 0.01;
+h = 0.01;
+h_fixed = 0.01;
+
+
+k_rd = 10;
+%keep in mind that returns 2-k nearest neighbors (so one less than k)
+%for j = [1:50,3700:3750]
+%{
+for j = 1:size(y,1)
+    [f(j),f_fixed_h(j),f_no_denom(j)] = ...
+        kernel_density_estimate_within_radius( [x y],j,radius,n,h,h_fixed );
+end
+%}
+for j = ...%[1:50,3700:3750]
+    1:size(y,1)
+    f(j) = kernel_density( [x y],j,radius,h,n );
+end
+
+threshold = median( f_reach );
+plotInliersVsOutliers( x,y,f,num_signal_points,threshold );

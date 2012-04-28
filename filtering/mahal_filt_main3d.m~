@@ -1,0 +1,43 @@
+addpath('mahalanobis');
+fid = fopen( '~/Data/bunny/reconstruction/bun_zipper_stripped.ply', 'r' );
+
+A = fscanf( fid, '%f %f %f %f %f\n', [5 inf] );
+x_in = A(1,:);
+y_in = A(2,:);
+z_in = A(3,:);
+
+
+[x,y,z] = addNoisyPoints( x_in,y_in,z_in,size(x_in,2)*2 );
+
+x = x';
+y = y';
+z = z';
+
+radius = 0.00005;
+empty_count = 0;
+dist_m = zeros(size(x));
+dist = zeros(size(x));
+f = zeros(size(x));
+%for i=1:size(x,1)
+for i=[1:100,37000:37100]
+    idx = neighborsWithinRadius( [x y z], [x(i) y(i) z(i)], radius );
+    if size(idx) < 5 %& idx == i
+        empty_count =  empty_count+1
+        dist_m(i) = -1;
+    else        
+            X = [x(idx(2:end))  y(idx(2:end)) z(idx(2:end))]';
+            %plot3(X(1,:),X(2,:),X(3,:),'.')
+            Y = [x(i) y(i) z(i)]';
+            dist_mat = cvMahaldist(Y,X);
+            %dist(i)  = mahal(Y',X');
+            f(i) = (1/radius^3) * exp( -.5*dist(i) / radius ) / size(idx,1);
+            %gaussian_dist_mat = exp(-.5*dist_mat );
+            dist_m(i) = sum( dist_mat ) / size(dist_mat,1);
+            f(i) = sum( exp(-.5*dist_mat ) ) / size(dist_mat,1);
+            if isnan(dist_m(i))
+                sprintf( 'isnan %d', i )
+                dist_m(i) = -5;
+            end
+    end
+    if mod(i,100)==0, sprintf( '%f completed', i/size(x,1)*100), end
+end

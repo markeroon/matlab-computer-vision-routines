@@ -1,0 +1,28 @@
+%{
+usable_pixel = silhouetteIm;
+num_pixels = sum(usable_pixel(:) == 1);
+x_vec = ones(num_pixels,1);
+y_vec = ones(num_pixels,1);
+x_dash_vec = ones(num_pixels,1);
+y_dash_vec = ones(num_pixels,1);
+idx = 1;
+for i=1:size( silhouetteIm,1 )
+    for j=1:size( silhouetteIm,2 )
+        if silhouetteIm(i,j) == 1
+            x_vec(idx) = y(i,j);
+            x_dash_vec(idx) = y(i,j) + bestshiftsL(i,j);
+            y_vec(idx) = x(i,j);
+            y_dash_vec(idx) = x(i,j);
+            idx = idx+1;
+        end        
+    end
+end
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%{
+[x_vec,y_vec,x_dash_vec,y_dash_vec] = ...
+    extractPairsFromRectifiedMapGenericIndexing( silhouetteIm,z_one,X,Y );
+[ X1,X2,X3 ] = get3dPoints( x_vec,y_vec,P{1},x_dash_vec,y_dash_vec,P{5} );
+%}

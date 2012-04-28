@@ -1,0 +1,402 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>main</title>
+      <meta name="generator" content="MATLAB 7.7">
+      <meta name="date" content="2011-06-20">
+      <meta name="m-file" content="main"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content"><pre class="codeinput">addpath( <span class="string">'~/Code/third_party/AOSLevelSetSegmentationToolbox/'</span> );
+addpath( <span class="string">'~/Code/third_party/LSMLIB/'</span> );
+addpath( <span class="string">'~/Code/PointCloudGenerator/'</span> );
+addpath( <span class="string">'~/Code/LevelSetsMethods3D/'</span> );
+addpath( <span class="string">'~/Code/filtering/'</span> );
+addpath( <span class="string">'~/Code/file_management/'</span> );
+addpath( <span class="string">'~/Code/filtering/mahalanobis/'</span> );
+clear
+
+dataset = <span class="string">'TORUS'</span>;
+
+<span class="keyword">if</span> strcmp( dataset, <span class="string">'BUNNY'</span> )
+    fid = fopen( <span class="string">'~/Data/bunny/reconstruction/bun_zipper_stripped.ply'</span>, <span class="string">'r'</span> );
+    A = fscanf( fid, <span class="string">'%f %f %f %f %f\n'</span>, [5 inf] );
+    X = A(1,:);
+    Y = A(2,:);
+    Z = A(3,:);
+<span class="keyword">elseif</span> strcmp( dataset, <span class="string">'DRILL'</span> )
+    fid = fopen( <span class="string">'~/Data/drill/reconstruction/drill_shaft_vrip_stripped.ply'</span>, <span class="string">'r'</span> );
+    A = fscanf( fid, <span class="string">'%f %f %f %f\n'</span>, [4 inf] );
+    X = A(1,:);
+    Y = A(2,:);
+    Z = A(3,:);
+<span class="keyword">elseif</span> strcmp( dataset, <span class="string">'TORUS'</span> )
+    [tri,pts] = plyread( <span class="string">'~/Data/torus.ply'</span>,<span class="string">'tri'</span> );
+    X = pts(:,1)';
+    Y = pts(:,2)';
+    Z = pts(:,3)';
+<span class="keyword">end</span>
+
+N = 100;
+
+x_min = min( X );
+x_max = max( X );
+y_min = min( Y );
+y_max = max( Y );
+z_min = min( Z );
+z_max = max( Z );
+
+dx = (x_max - x_min) / N;
+dy = (y_max - y_min) / N;
+dz = (z_max - z_min) / N;
+
+<span class="comment">%{
+</span><span class="comment">x_min = x_min - 100*dx;
+</span><span class="comment">x_max = x_max + 100*dx;
+</span><span class="comment">y_min = y_min - 100*dy;
+</span><span class="comment">y_max = y_max + 100*dy;
+</span><span class="comment">z_min = z_min - 100*dz;
+</span><span class="comment">z_max = z_max + 100*dz;
+</span><span class="comment">[x,y,z] = meshgrid( x_min:dx:x_max,y_min:dy:y_max,z_min:dz:z_max );
+</span><span class="comment">%}
+</span>
+freq = 5;
+<span class="comment">%[X_noisy,Y_noisy,Z_noisy] = addNoise( X,Y,Z,freq,0.004 );</span>
+[X_noisy,Y_noisy,Z_noisy] = addNoisyPoints( X,Y,Z,size(X,2)*2,dx,dy,dz );
+
+X_vec = [ X_noisy' , Y_noisy', Z_noisy' ];
+q_x = ones(size(X_noisy));
+f = ones(size(X_noisy));
+f_fixed_h = ones(size(X_noisy));
+h = 20;
+h_fixed = 1;
+
+q_x_radius = ones(size(X_noisy));
+f_radius = ones(size(X_noisy));
+f_fixed_h_radius = ones(size(X_noisy));
+
+radius = 0.000001;
+k = 50;
+n = 10;
+<span class="comment">%for i=1:size(X_vec,1)</span>
+<span class="keyword">for</span> i=[100:150,4901:5001]
+   [q_x(i),id,dist,f(i),f_fixed_h(i)] = kernel_density_estimate( X_vec,i,k,n,h,h_fixed );
+   [q_x_radius(i),id,dist,f_radius(i),f_fixed_h_radius(i)] = kernel_density_estimate( X_vec,i,radius,n,h,h_fixed );
+   <span class="keyword">if</span> mod(i,50) == 0
+       sprintf( <span class="string">'%f completed'</span>, i/size(X_vec,1)*100 )
+   <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">if</span> strcmp( dataset, <span class="string">'DRILL'</span> )
+    [A1] = exportOffFile( X,Y,Z, <span class="string">'~/Data/drill_prior_to_noise_addition.off'</span>  );
+    idx = find( f &gt;= 0.04 );
+    [A2] = exportOffFile( X_noisy(idx),Y_noisy(idx),Z_noisy(idx), <span class="string">'~/Data/drill_filt.off'</span>  );
+<span class="keyword">end</span>
+
+<span class="comment">% now check detection algorithm</span>
+detection_reference = zeros(size(f));
+detection_reference(size(X,2):end) = 1;
+<span class="comment">%detection_reference(1:freq:end) = 1;</span>
+
+thresh_max = max( f .* detection_reference );
+
+roc_x = [];
+roc_y = [];
+true_positive_detect = 1;
+<span class="keyword">while</span> true_positive_detect &gt; 0
+    detection_result = f &lt; thresh_max;
+    thresh_max = thresh_max - 10000000000;
+
+    actual_normal_class = ~detection_reference;
+    actual_outlier_class = detection_reference;
+
+
+
+    true_positive_detect =  sum( detection_reference == 1 &amp; detection_result == 1 );
+    false_negative_detect = sum( detection_reference == 1 &amp; detection_result == 0 );
+
+    false_positive_detect =  sum( detection_reference == 0 &amp; detection_result == 1 );
+    true_negative_detect  =  sum( detection_reference == 0 &amp; detection_result == 0 );
+
+    detect_rate = true_positive_detect / (true_positive_detect + false_negative_detect );
+    false_alarm_rate = false_positive_detect / ( false_positive_detect + true_negative_detect );
+    roc_x = [roc_x detect_rate];
+    roc_y = [roc_y false_alarm_rate];
+<span class="keyword">end</span>
+
+A = [roc_y' , roc_x' ];
+filename = sprintf( <span class="string">'roc_curves_k_%d.txt'</span>, k );
+f_out = fopen( filename, <span class="string">'w'</span> );
+fprintf( f_out, <span class="string">'%d %d\n'</span>, A' );
+fclose( f_out );
+
+
+phi = cube_SDF( size(x),6,[dx dy dz]  );
+
+sprintf( <span class="string">'getting distance function from points...'</span> )
+[d,d_x,d_y,d_z] = distance_vol( X,Y,Z,x,y,z,[dx dy dz]);
+sprintf( <span class="string">'done'</span> )
+
+reinit_iterations = 25;
+alpha = 0.4;
+iterations = 1;
+accuracy = <span class="string">'ENO3'</span>;
+is_signed_distance = 1;
+kappa_evolve = 0;               <span class="comment">% NOTE THAT KAPPA_EVOLVE IS TURNED OFF!!!!!</span>
+b = d;
+vector_evolve = 1;
+u = d_x;
+v = d_y;
+w = d_z;
+normal_evolve = 0;
+Vn = [];
+phi_old = cell(400,1);
+phi2 = phi;
+
+<span class="keyword">for</span> i=1:8000
+    phi2 = evolve3D(phi2, dx, dy, dz, alpha, iterations, accuracy, is_signed_distance, normal_evolve, Vn, vector_evolve, u, v, w, kappa_evolve, b);
+    phi2 = reinit_SD(phi2,dx, dy, dz, alpha,accuracy, reinit_iterations);
+    <span class="keyword">if</span> mod(i,20) == 0
+        phi_old{int32(i/20)} = phi2;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">Warning: Size vector should be a row vector with integer elements. 
+Warning: Integer operands are required for colon operator when used as index </pre><pre class="codeoutput">Improper assignment with rectangular empty matrix.
+
+Error in ==&gt; kNearestNeighbors at 37
+    neighborIds(i,:) = sortpos(1:k);
+
+Error in ==&gt; kernel_density_estimate at 8
+    [id,dist_x] = kNearestNeighbors( X_vec,X_vec(index,:),k);
+
+Error in ==&gt; main at 75
+   [q_x_radius(i),id,dist,f_radius(i),f_fixed_h_radius(i)] = kernel_density_estimate( X_vec,i,radius,n,h,h_fixed );
+</pre><p class="footer"><br>
+            Published with MATLAB&reg; 7.7<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+addpath( '~/Code/third_party/AOSLevelSetSegmentationToolbox/' );
+addpath( '~/Code/third_party/LSMLIB/' );
+addpath( '~/Code/PointCloudGenerator/' );
+addpath( '~/Code/LevelSetsMethods3D/' );
+addpath( '~/Code/filtering/' );
+addpath( '~/Code/file_management/' );
+addpath( '~/Code/filtering/mahalanobis/' );
+clear
+
+dataset = 'TORUS';
+
+if strcmp( dataset, 'BUNNY' )
+    fid = fopen( '~/Data/bunny/reconstruction/bun_zipper_stripped.ply', 'r' );
+    A = fscanf( fid, '%f %f %f %f %f\n', [5 inf] );
+    X = A(1,:);
+    Y = A(2,:);
+    Z = A(3,:);
+elseif strcmp( dataset, 'DRILL' )
+    fid = fopen( '~/Data/drill/reconstruction/drill_shaft_vrip_stripped.ply', 'r' );
+    A = fscanf( fid, '%f %f %f %f\n', [4 inf] );
+    X = A(1,:);
+    Y = A(2,:);
+    Z = A(3,:);
+elseif strcmp( dataset, 'TORUS' )
+    [tri,pts] = plyread( '~/Data/torus.ply','tri' );
+    X = pts(:,1)';
+    Y = pts(:,2)';
+    Z = pts(:,3)';
+end
+
+N = 100;
+
+x_min = min( X );
+x_max = max( X );
+y_min = min( Y );
+y_max = max( Y );
+z_min = min( Z );
+z_max = max( Z );
+
+dx = (x_max - x_min) / N;
+dy = (y_max - y_min) / N;
+dz = (z_max - z_min) / N;
+
+%{
+x_min = x_min - 100*dx; 
+x_max = x_max + 100*dx;
+y_min = y_min - 100*dy; 
+y_max = y_max + 100*dy;
+z_min = z_min - 100*dz; 
+z_max = z_max + 100*dz;
+[x,y,z] = meshgrid( x_min:dx:x_max,y_min:dy:y_max,z_min:dz:z_max );
+%}
+
+freq = 5;
+%[X_noisy,Y_noisy,Z_noisy] = addNoise( X,Y,Z,freq,0.004 );
+[X_noisy,Y_noisy,Z_noisy] = addNoisyPoints( X,Y,Z,size(X,2)*2,dx,dy,dz );
+
+X_vec = [ X_noisy' , Y_noisy', Z_noisy' ];
+q_x = ones(size(X_noisy));
+f = ones(size(X_noisy));
+f_fixed_h = ones(size(X_noisy));
+h = 20;
+h_fixed = 1;
+
+q_x_radius = ones(size(X_noisy));
+f_radius = ones(size(X_noisy));
+f_fixed_h_radius = ones(size(X_noisy));
+
+radius = 0.000001;
+k = 50;
+n = 10;
+%for i=1:size(X_vec,1)
+for i=[100:150,4901:5001]
+   [q_x(i),id,dist,f(i),f_fixed_h(i)] = kernel_density_estimate( X_vec,i,k,n,h,h_fixed );
+   [q_x_radius(i),id,dist,f_radius(i),f_fixed_h_radius(i)] = kernel_density_estimate( X_vec,i,radius,n,h,h_fixed );
+   if mod(i,50) == 0
+       sprintf( '%f completed', i/size(X_vec,1)*100 )
+   end
+end
+
+
+
+if strcmp( dataset, 'DRILL' )
+    [A1] = exportOffFile( X,Y,Z, '~/Data/drill_prior_to_noise_addition.off'  );
+    idx = find( f >= 0.04 );
+    [A2] = exportOffFile( X_noisy(idx),Y_noisy(idx),Z_noisy(idx), '~/Data/drill_filt.off'  );
+end
+
+% now check detection algorithm
+detection_reference = zeros(size(f));
+detection_reference(size(X,2):end) = 1;
+%detection_reference(1:freq:end) = 1;
+
+thresh_max = max( f .* detection_reference );
+
+roc_x = [];
+roc_y = [];
+true_positive_detect = 1;
+while true_positive_detect > 0
+    detection_result = f < thresh_max;
+    thresh_max = thresh_max - 10000000000;
+    
+    actual_normal_class = ~detection_reference;
+    actual_outlier_class = detection_reference;
+    
+    
+    
+    true_positive_detect =  sum( detection_reference == 1 & detection_result == 1 );
+    false_negative_detect = sum( detection_reference == 1 & detection_result == 0 );   
+    
+    false_positive_detect =  sum( detection_reference == 0 & detection_result == 1 );
+    true_negative_detect  =  sum( detection_reference == 0 & detection_result == 0 );
+    
+    detect_rate = true_positive_detect / (true_positive_detect + false_negative_detect );
+    false_alarm_rate = false_positive_detect / ( false_positive_detect + true_negative_detect );
+    roc_x = [roc_x detect_rate];
+    roc_y = [roc_y false_alarm_rate];
+end
+
+A = [roc_y' , roc_x' ];
+filename = sprintf( 'roc_curves_k_%d.txt', k );
+f_out = fopen( filename, 'w' );
+fprintf( f_out, '%d %d\n', A' );
+fclose( f_out );
+
+
+phi = cube_SDF( size(x),6,[dx dy dz]  );
+
+sprintf( 'getting distance function from points...' )
+[d,d_x,d_y,d_z] = distance_vol( X,Y,Z,x,y,z,[dx dy dz]);
+sprintf( 'done' )
+
+reinit_iterations = 25;
+alpha = 0.4;
+iterations = 1;
+accuracy = 'ENO3';
+is_signed_distance = 1;
+kappa_evolve = 0;               % NOTE THAT KAPPA_EVOLVE IS TURNED OFF!!!!!
+b = d;
+vector_evolve = 1;
+u = d_x;
+v = d_y;
+w = d_z;
+normal_evolve = 0;
+Vn = [];
+phi_old = cell(400,1);
+phi2 = phi;
+
+for i=1:8000
+    phi2 = evolve3D(phi2, dx, dy, dz, alpha, iterations, accuracy, is_signed_distance, normal_evolve, Vn, vector_evolve, u, v, w, kappa_evolve, b);
+    phi2 = reinit_SD(phi2,dx, dy, dz, alpha,accuracy, reinit_iterations); 
+    if mod(i,20) == 0
+        phi_old{int32(i/20)} = phi2;               
+    end
+end
+##### SOURCE END #####
+-->
+   </body>
+</html>
