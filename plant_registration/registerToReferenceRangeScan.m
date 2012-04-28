@@ -41,12 +41,12 @@ opt.viz=1;          % show every iteration
 opt.outliers=0; %0.1;don't account for outliers   % use 0.5 noise weight
 
 opt.normalize=0; %1;    % normalize to unit variance and zero mean before registering (default)
-%opt.scale=1; %1;        % estimate global scaling too (default)
-opt.rot=1;         % estimate rotation, but with reflection
+opt.scale=1; %1;        % estimate global scaling too (default)
+opt.rot=1;         % estimate strictly rotation
 opt.corresp=0;      % do not compute the correspondence vector at the end of registration (default). Can be quite slow for large data sets.
 
-%opt.lambda = lambda;
-%opt.beta = beta;
+opt.lambda = lambda;
+opt.beta = beta;
 opt.max_it= num_rigid_iters;     % max number of iterations
 opt.tol= 1e-10;       % tolerance
  

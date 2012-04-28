@@ -1,0 +1,34 @@
+if ~exist( 'cubeSDF.m', 'file' )
+    addpath( '/home/mbrophy/SurfaceEvolve' );
+end
+
+dims = [100 100];
+
+S = ones(dims);
+% remember from Computer Arch!
+S(35:5:65,35) = 0;
+S(35:5:65,65) = 0;
+S(35,35:5:65) = 0;
+S(65,35:5:65) = 0;
+
+
+d = bwdist( ~S );
+
+%[y,x,z] = meshgrid( 1:dims(1),1:dims(2),1:dims(3) );
+
+%offset_x = dims( 1 ) / 2;
+%offset_y = dims( 2 ) / 2;
+
+%radius = 22;
+%radius = 50;
+%phi = (x-offset_x).^2 + (y-offset_y).^2 + (z-offset_z).^2 - (radius*radius);
+%margins = [10 10 10];
+%phi = cubeSDF( dims,margins );
+margin = 10;
+phi = ac_SDF_2D( 'rectangle', dims, margin );
+
+
+delta_t = 0.35;
+n_iters = 500;
+grad_weight = 1.; curvature_weight = 2.;
+[phi,d_mag,kappa,nabla_dnabla_phi,dphidt]= convect2d( phi,d,delta_t,n_iters,grad_weight,curvature_weight );

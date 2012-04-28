@@ -1,11 +1,11 @@
-data = open('../../Data/DeformStaple_allpatients.mat')
+data = open('../../Data/ITV_Workspace.mat')
 addpath('../PointCloudGenerator' );
 addpath(genpath('../third_party/CPD2/'));
 addpath('../plant_registration');
-names = data.names_patient001;
-segmentation = data.rois_patient001;
+names = data.names_patient002;
+segmentation = data.rois_patient002;
 num_segmentations = size(segmentation,2);
-X = cell(num_segmentations,1);
+X_cell = cell(num_segmentations,1);
 data = cell(num_segmentations,1);
 for i=1:num_segmentations
 
@@ -17,28 +17,27 @@ for i=1:num_segmentations
         b_z = [b_z; b{j}(:,3)];
     end
     
-    X{i} = [b_x,b_y,b_z];
+    X_cell{i} = [b_x,b_y,b_z];
     
 end
+X=X_cell{2};
+Y=X_cell{4};
 
-iters_rigid = 30;
-iters_nonrigid = 0;
-Yr_subdiv = ones(size(X{212}));
-[Yr_subdiv(:,1),Yr_subdiv(:,2),Yr_subdiv(:,3)] = register_surface_subdivision_upper_bound( ...
-                                           X{20},X{212},iters_rigid,iters_nonrigid );
-
-[neighbour_id,neighbour_dist] = kNearestNeighbors(X{20}, Yr_subdiv, 1 );
+opt.fgt = 2;
+opt.method = 'nonrigid_lowrank';
+opt.max_iters = 50;
+T = cpd_register( X,Y,opt );
+Yr_subdiv = T.Y;
+[neighbour_id,neighbour_dist] = kNearestNeighbors(X, Yr_subdiv, 1 );
 % get nearest neighbour for each point in the original cloud in the
 % matched cloud
 
 neighbour_id_u = unique(neighbour_id);
 
-Y_reg = ones(size(X{20}(neighbour_id_u,:)));
-[Y_reg(:,1),Y_reg(:,2),Y_reg(:,3)] = register_surface_subdivision_upper_bound( ...
-                                           X{212},X{20}(neighbour_id_u,:),iters_rigid,iters_nonrigid );
-                                       
+T = cpd_register( Y,X(neighbour_id_u,:) );
+X_reg = T.Y;
 [neighbour_id_reg,neighbour_dist_reg] = ...
-    kNearestNeighbors( X{20}(neighbour_id_u,:),Y_reg, 1 );
+    kNearestNeighbors( X,X_reg, 1 );
 
                 %kNearestNeighbors(Y_reg, X{20}(neighbour_id_u,:), 1 );
 
@@ -46,6 +45,7 @@ sprintf('RMS-E: ' )
 rms_e = sqrt( sum(neighbour_dist_reg(:))/ length(neighbour_dist_reg(:)) ) 
 
 
+%{
 iters_rigid = 30;
 iters_nonrigid = 20;
 lambda = 3;%13; % regularization weight
@@ -109,3 +109,4 @@ Data.vertex.z = b_z;
 
 %addpath('../file_management/');
 %ply_write(Data,'~/Data/tumor.ply' );
+%}

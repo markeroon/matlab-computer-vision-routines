@@ -7,44 +7,55 @@ end
  
 function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE )   
     if size(X,1) > MIN_SIZE && size(Y,1) > MIN_SIZE
-       
         [T] = cpd_register(X,Y,opt);
         Y1_ = T.Y(:,1);
         Y2_ = T.Y(:,2);
         Y3_ = T.Y(:,3);
+        
+        % after initial registration, use more refined
+        opt.fgt = 0;
+        opt.method = 'rigid';
+        opt.normalize = 1;
+        opt.outliers = 0.4;
         T = 0;
         Y = [];
         q = [X(:,1);Y1_]
-        min_x = min( [ X(:,1);Y1_ ] )
-        max_x = max( [ X(:,1);Y1_ ] )
-        min_y = min( [ X(:,2);Y2_ ] )
-        max_y = max( [ X(:,2);Y2_ ] )
-        min_z = min( [ X(:,3);Y3_ ] )  
-        max_z = max( [ X(:,3);Y3_ ] )
+        min_x = min( [ X(:,1);Y1_ ] );
+        max_x = max( [ X(:,1);Y1_ ] );
+        min_y = min( [ X(:,2);Y2_ ] );
+        max_y = max( [ X(:,2);Y2_ ] );
+        min_z = min( [ X(:,3);Y3_ ] ); 
+        max_z = max( [ X(:,3);Y3_ ] );
+        % padding does not work because 
+        % we are just dividing in half.
         %pad = 0.2;
         
-        left_x   = min_x %- pad*width
-        right_x  = max_x %+ pad*width
-        top_x    = max_y %+ pad*height
-        bottom_x = min_y %- pad*height
-        back_x   = min_z %- pad*depth
-        front_x  = max_z %+ pad*depth
+        width = dist(min_x,max_x);
+        height = dist(min_y,max_y);
+        depth = dist(min_z,max_z);
+        
+        left_x   = min_x; %- pad*width
+        right_x  = max_x; %+ pad*width
+        top_x    = max_y; %+ pad*height
+        bottom_x = min_y; %- pad*height
+        back_x   = min_z; %- pad*depth
+        front_x  = max_z; %+ pad*depth
         
         % this use of X co-ords as the dividing space is on purpose
-        left_y   = min_x
-        right_y  = max_x
-        top_y    = max_y
-        bottom_y = min_y
-        back_y   = min_z
-        front_y  = max_z      
+        left_y   = min_x;
+        right_y  = max_x;
+        top_y    = max_y;
+        bottom_y = min_y;
+        back_y   = min_z;
+        front_y  = max_z ;     
         
-        m_width  = left_x+((right_x-left_x)/2)
-        m_height = bottom_x+((top_x-bottom_x)/2)
-        m_depth = back_x+((front_x-back_x)/2 )
+        m_width  = left_x+((right_x-left_x)/2);
+        m_height = bottom_x+((top_x-bottom_x)/2);
+        m_depth = back_x+((front_x-back_x)/2 );
         
-        m_width_y  = left_y+((right_y-left_y)/2)
-        m_height_y = bottom_y+((top_y-bottom_y)/2)
-        m_depth_y = back_y+((front_y-back_y)/2 )
+        m_width_y  = left_y+((right_y-left_y)/2);
+        m_height_y = bottom_y+((top_y-bottom_y)/2);
+        m_depth_y = back_y+((front_y-back_y)/2 );
         
         X1_ = X(:,1);
         X2_ = X(:,2);

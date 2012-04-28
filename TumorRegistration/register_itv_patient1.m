@@ -2,8 +2,8 @@ data = open('../../Data/ITV_Workspace.mat')
 addpath('../PointCloudGenerator' );
 addpath(genpath('../third_party/CPD2/'));
 addpath('../plant_registration');
-names = data.names_patient002;
-segmentation = data.rois_patient002;
+names = data.names_patient001;
+segmentation = data.rois_patient001;
 num_segmentations = size(segmentation,2);
 X = cell(num_segmentations,1);
 data = cell(num_segmentations,1);
