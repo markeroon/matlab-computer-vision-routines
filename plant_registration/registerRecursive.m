@@ -30,9 +30,9 @@ function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE )
         % we are just dividing in half.
         %pad = 0.2;
         
-        width = dist(min_x,max_x);
-        height = dist(min_y,max_y);
-        depth = dist(min_z,max_z);
+        %width = dist(min_x,max_x);
+        %height = dist(min_y,max_y);
+        %depth = dist(min_z,max_z);
         
         left_x   = min_x; %- pad*width
         right_x  = max_x; %+ pad*width

@@ -13,7 +13,7 @@ t = [ 63.3043,  234.5963, -46.8392 ];
 filename_0 = sprintf( '../../Data/PlantDataPly/plants_converted82-%03d-clean-clear.ply', 0 );
 [Elements_0,varargout_0] = plyread(filename_0);
 X = [Elements_0.vertex.x';Elements_0.vertex.y';Elements_0.vertex.z']';
-X = X(1:15:end,:); % subset for testing
+%X = X(1:15:end,:); % subset for testing
 Y_reg_all = cell(11,1);
 for q=1:11
 filename_1 = sprintf( '../../Data/PlantDataPly/plants_converted82-%03d-clean-clear.ply', q );
@@ -27,8 +27,8 @@ end
 
 
 
-Y = Y(1:15:end,:); %subset for testing
-opt.viz = 1;
+%Y = Y(1:15:end,:); %subset for testing
+opt.viz = 0;
 opt.max_it = 20;
 opt.outliers = 0.2;
 opt.tol = 1e-12;
@@ -39,7 +39,7 @@ opt.fgt = 2;
 opt.method='rigid';
 %opt.lambda = 7;
 %opt.beta = 2; %possible that less than this is too much ram
-min_size = 900;
+min_size = 9000;
 Yr_subdiv = ones(size(Y));
 
 [Yr_subdiv(:,1),Yr_subdiv(:,2),Yr_subdiv(:,3)] =  ...      
