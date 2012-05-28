@@ -2,6 +2,7 @@ addpath( '../file_management/' );
 addpath( genpath( '../third_party/CPD2' ) );
 addpath( '../plant_registration' );
 addpath( '../PointCloudGenerator' );
+addpath( '../third_party/icp' );
 rms_e_all = [];
 R =  [ 0.9101   -0.4080    0.0724 ;
        0.4118    0.8710   -0.2681 ;
@@ -27,8 +28,8 @@ end
 
 
 Y = Y(1:15:end,:); %subset for testing
-opt.viz = 0;
-opt.max_it = 70;
+opt.viz = 1;
+opt.max_it = 20;
 opt.outliers = 0.2;
 opt.tol = 1e-12;
 opt.rot = 0;
@@ -38,7 +39,7 @@ opt.fgt = 2;
 opt.method='rigid';
 %opt.lambda = 7;
 %opt.beta = 2; %possible that less than this is too much ram
-min_size = 400;
+min_size = 900;
 Yr_subdiv = ones(size(Y));
 
 [Yr_subdiv(:,1),Yr_subdiv(:,2),Yr_subdiv(:,3)] =  ...      

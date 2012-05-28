@@ -99,6 +99,14 @@ function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE )
         X__ = [Y1_000; Y1_001 ; Y1_010 ; Y1_011 ; Y1_100 ; Y1_101 ; Y1_110 ; Y1_111 ]; 
         Y__ = [Y2_000; Y2_001 ; Y2_010 ; Y2_011 ; Y2_100 ; Y2_101 ; Y2_110 ; Y2_111 ];  
         Z__ = [Y3_000; Y3_001 ; Y3_010 ; Y3_011 ; Y3_100 ; Y3_101 ; Y3_110 ; Y3_111 ]; 
+    elseif size(X,1) > 100 && size(Y,1) > 100
+        [R,T] = icp( X,Y );
+        %Y_icp = R*Y' + T;
+        Y_icp = R*Y' + repmat(T',size(Y,1),1)';
+        Y_icp = Y_icp';
+        X__ = Y_icp(:,1);
+        Y__ = Y_icp(:,2);
+        Z__ = Y_icp(:,3);
     else
         X__ = Y(:,1);
         Y__ = Y(:,2);

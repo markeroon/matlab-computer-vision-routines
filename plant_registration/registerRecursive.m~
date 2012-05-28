@@ -14,16 +14,18 @@ function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE )
         
         % after initial registration, use more refined
         opt.fgt = 0;
-        opt.method = 
+        opt.method = 'rigid';
+        opt.normalize = 1;
+        opt.outliers = 0.4;
         T = 0;
         Y = [];
         q = [X(:,1);Y1_]
-        min_x = min( [ X(:,1);Y1_ ] )
-        max_x = max( [ X(:,1);Y1_ ] )
-        min_y = min( [ X(:,2);Y2_ ] )
-        max_y = max( [ X(:,2);Y2_ ] )
-        min_z = min( [ X(:,3);Y3_ ] )  
-        max_z = max( [ X(:,3);Y3_ ] )
+        min_x = min( [ X(:,1);Y1_ ] );
+        max_x = max( [ X(:,1);Y1_ ] );
+        min_y = min( [ X(:,2);Y2_ ] );
+        max_y = max( [ X(:,2);Y2_ ] );
+        min_z = min( [ X(:,3);Y3_ ] ); 
+        max_z = max( [ X(:,3);Y3_ ] );
         % padding does not work because 
         % we are just dividing in half.
         %pad = 0.2;
@@ -47,13 +49,13 @@ function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE )
         back_y   = min_z;
         front_y  = max_z ;     
         
-        m_width  = left_x+((right_x-left_x)/2)
-        m_height = bottom_x+((top_x-bottom_x)/2)
-        m_depth = back_x+((front_x-back_x)/2 )
+        m_width  = left_x+((right_x-left_x)/2);
+        m_height = bottom_x+((top_x-bottom_x)/2);
+        m_depth = back_x+((front_x-back_x)/2 );
         
-        m_width_y  = left_y+((right_y-left_y)/2)
-        m_height_y = bottom_y+((top_y-bottom_y)/2)
-        m_depth_y = back_y+((front_y-back_y)/2 )
+        m_width_y  = left_y+((right_y-left_y)/2);
+        m_height_y = bottom_y+((top_y-bottom_y)/2);
+        m_depth_y = back_y+((front_y-back_y)/2 );
         
         X1_ = X(:,1);
         X2_ = X(:,2);
@@ -97,6 +99,14 @@ function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE )
         X__ = [Y1_000; Y1_001 ; Y1_010 ; Y1_011 ; Y1_100 ; Y1_101 ; Y1_110 ; Y1_111 ]; 
         Y__ = [Y2_000; Y2_001 ; Y2_010 ; Y2_011 ; Y2_100 ; Y2_101 ; Y2_110 ; Y2_111 ];  
         Z__ = [Y3_000; Y3_001 ; Y3_010 ; Y3_011 ; Y3_100 ; Y3_101 ; Y3_110 ; Y3_111 ]; 
+    elseif size(X,1) > 100 && size(Y,1) > 100
+        [R,T] = icp( X,Y );
+        %Y_icp = R*Y' + T;
+        Y_icp = R*Y' + repmat(T',size(Y,1),1)';
+        Y_icp = Y_icp';
+        X__ = Y_icp(:,1);
+        Y__ = Y_icp(:,2);
+        Z__ = Y_icp(:,3);
     else
         X__ = Y(:,1);
         Y__ = Y(:,2);
