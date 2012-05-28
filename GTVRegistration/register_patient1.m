@@ -1,0 +1,51 @@
+data = open('../../Data/DeformStaple_allpatients.mat')
+addpath('../PointCloudGenerator' );
+addpath(genpath('../third_party/CPD2/'));
+addpath('../plant_registration');
+names = data.names_patient001;
+segmentation = data.rois_patient001;
+num_segmentations = size(segmentation,2);
+X = cell(num_segmentations,1);
+data = cell(num_segmentations,1);
+for i=1:num_segmentations
+
+    b = segmentation{i};
+    b_x=[];b_y=[];b_z=[];
+    for j = 1:size(b,1)
+        b_x = [b_x; b{j}(:,1)];
+        b_y = [b_y; b{j}(:,2)];
+        b_z = [b_z; b{j}(:,3)];
+    end
+    
+    X{i} = [b_x,b_y,b_z];
+    
+end
+indices_prim_ten_percent = [22 42 58 94];
+vals = names{indices_prim_ten_percent}
+
+MIN_REG_SIZE = 200;
+iters_rigid = 0;
+iters_nonrigid = 50;%30;
+
+
+beta = 2;
+lambda = 3;
+fgt = 0;
+scale = 1;
+Y_sav = cell(20,1);
+for i=1:length(indices_prim_ten_percent)
+    Y = X{indices_prim_ten_percent(i)};
+    Y_ = ones(size(X{indices_prim_ten_percent(i)}));
+    %{
+    [Y_(:,1),Y_(:,2),Y_(:,3)] = register_surface_subdivision_upper_bound( ...
+                                    X{2},Y, ...
+                                    iters_rigid,iters_nonrigid,lambda,...
+                                    beta,MIN_REG_SIZE );
+
+    %}
+    [Y_(:,1),Y_(:,2),Y_(:,3),t_r2,t_nr2,c_r2,c_nr2] = ...
+        registerToReferenceRangeScan( X{2}, ...
+        X{indices_prim_ten_percent(i)}, iters_rigid,iters_nonrigid,...
+        lambda,beta,fgt,scale );
+    Y_sav{i} = Y_;
+end

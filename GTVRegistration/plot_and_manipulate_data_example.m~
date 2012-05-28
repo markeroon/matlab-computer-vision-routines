@@ -1,0 +1,59 @@
+data = cell(10,1); 
+for i=1:10
+     data{i} = open( sprintf( ...
+               '~/Data/registered_gtvs_patient_%02d.mat',i) );
+ end
+%colors = {  '.b', '.brown', '.r', '.g',...
+%            '.y', '.c', ...
+%            '.m', '.k','.darkgreen' };
+ 
+
+
+colors = {[0 0 0],... 'Black'
+[1 .4 1],...
+[1 0 0], ...
+[0 1 0],...
+[0 0 1], ...
+[1 1 0], ...
+[1 0 1], ... %'yellow'
+[0 1 1], ... %'magenta'
+[0.5 0.5 0.5],...
+[0.5 0 0],...
+[1 0.62 0.40],...
+[0.49 1 0.83] };
+
+figure
+for j=1:10 % generate one subfig for each patient
+subplot(5,5,j)   
+    
+
+hold on;
+for i=1:9
+    Y= data{j}.registered_tumours.phase_00{i}.Y;
+    plot3(Y(:,1),Y(:,2), ...
+          Y(:,3), colors{i} );
+    i
+end
+
+
+
+end
+    
+figure
+for j=1:10
+subplot(5,5,j)
+
+Y= data{j}.registered_tumours.phase_00{1}.Y;
+mid_z = max(Y(:,3)) - ( max(Y(:,3)) - min(Y(:,3)) ) / 2;  
+hold on
+for i=1:9
+    clear idx_slice_z
+    Y= data{j}.registered_tumours.phase_30{i}.Y;
+    idx_slice_z(:,:) = find( ...
+                            Y(:,3) < mid_z & ...
+                            Y(:,3) > mid_z-.2 );
+    plot( Y(idx_slice_z,1),Y(idx_slice_z,2), ...
+        colors{i},'markersize',1 );
+end
+
+end
