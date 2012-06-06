@@ -39,16 +39,17 @@ opt.fgt = 2;
 opt.method='rigid';
 %opt.lambda = 7;
 %opt.beta = 2; %possible that less than this is too much ram
-min_size = 50;
-%Yr_subdiv = ones(size(Y));
+min_size = 140;
+max_registerable_dist = 12;
+Yr_subdiv = ones(size(Y));
 
-%[Yr_subdiv(:,1),Yr_subdiv(:,2),Yr_subdiv(:,3)] =  ...      
-[Yr_x,Yr_y,Yr_z] = ...
-    registerRecursive( X,Y,opt,min_size );
+[Yr_subdiv(:,1),Yr_subdiv(:,2),Yr_subdiv(:,3)] =  ...      
+    registerRecursive( X,Y,opt,min_size,max_registerable_dist );
                     %  register_surface_subdivision_upper_bound( ...
                     %                       X,Y,iters_rigid,iters_nonrigid,...
                     %                       lambda,beta, min_size );
-                                       
+            
+                    
 [neighbour_id] = kNearestNeighbors(X, Yr_subdiv, 1 );
 % get nearest neighbour for each point in the original cloud in the
 % matched cloud
