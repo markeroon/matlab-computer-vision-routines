@@ -26,7 +26,7 @@ function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE,max_dist,iter_num )
         end
         %}
         T = cpd_register(X,Y,opt);
-        Y = T.Y;
+        Y = 
         
         
         min_x = min( [ X(:,1); Y(:,1) ] );
