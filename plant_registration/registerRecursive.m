@@ -1,12 +1,12 @@
 %REGISTER_VIA_SURFACE_SUBDIVISION Do a coarse to fine, recursive
 %registration.
-function [Y1,Y2,Y3] = ...
+function [Y1,Y2,Y3,idx_unreg] = ...
     registerRecursive( X,Y,opt,MIN_SIZE,MAX_REGISTERABLE_DIST )
     T = cpd_register(X,Y,opt);
     iter_num=0;
-    [X,Y] = getTopLeft(X,T.Y);
+    
     [Y1,Y2,Y3] = ...
-        registerPoints( X,Y,opt,MIN_SIZE,MAX_REGISTERABLE_DIST,iter_num );
+        registerPoints( X,T.Y,opt,MIN_SIZE,MAX_REGISTERABLE_DIST,iter_num );
 end
  
 function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE,max_dist,iter_num )   
