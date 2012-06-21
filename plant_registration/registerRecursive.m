@@ -2,16 +2,16 @@
 %registration.
 function [Y1,Y2,Y3] = ...
     registerRecursive( X,Y,opt,MIN_SIZE,MAX_REGISTERABLE_DIST )
-    T = cpd_register(X,Y,opt);
+    %T = cpd_register(X,Y,opt);
     iter_num=0;
-    [X,Y] = getTopLeft(X,T.Y);
+    %[X,Y] = getTopLeft(X,T.Y);
     [Y1,Y2,Y3] = ...
         registerPoints( X,Y,opt,MIN_SIZE,MAX_REGISTERABLE_DIST,iter_num );
 end
  
 function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE,max_dist,iter_num )   
     if size(X,1) > MIN_SIZE && size(Y,1) > MIN_SIZE
-        Y_old = Y;
+        %Y_old = Y;
         %{
         if iter_num > 0
             [R,T] = icp( X,Y );

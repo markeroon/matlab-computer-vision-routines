@@ -26,8 +26,8 @@ for j=1:q
 end
 
 
-opt.viz = 1;
-opt.max_it = 15;
+opt.viz = 0;
+opt.max_it = 70;
 opt.outliers = 0.1;
 opt.tol = 1e-12;
 opt.rot = 0;
@@ -37,11 +37,11 @@ opt.fgt = 2;
 opt.method='rigid';
 %opt.lambda = 7;
 %opt.beta = 2; %possible that less than this is too much ram
-min_size = 500;
+min_size = 900;
 max_registerable_dist = 12;
-%Yr_subdiv = ones(size(Y));
+Yr_subdiv = ones(size(Y));
 
-[Yr_subdiv_x,Yr_subdiv_y,Yr_subdiv_z] =  ...      
+[Yr_subdiv(:,1),Yr_subdiv(:,2),Yr_subdiv(:,3)] =  ...      
     registerRecursive( X,Y,opt,min_size,max_registerable_dist );
                     %  register_surface_subdivision_upper_bound( ...
                     %                       X,Y,iters_rigid,iters_nonrigid,...
