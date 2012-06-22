@@ -1,17 +1,25 @@
 %REGISTER_VIA_SURFACE_SUBDIVISION Do a coarse to fine, recursive
 %registration.
-function [Y1,Y2,Y3,idx_unreg] = ...
-    registerRecursive( X,Y,opt,MIN_SIZE,MAX_REGISTERABLE_DIST )
-    T = cpd_register(X,Y,opt);
+function [Y1,Y2,Y3,idx_y_unreg] = ...
+        registerRecursive( X,Y,opt,MIN_SIZE,MAX_REGISTERABLE_DIST )
+    %{
+    opt2 = opt;
+    opt2.viz = 1;
+    opt2.max_it = 15;
+    T = cpd_register(X,Y,opt2);
+    Y = T.Y;
+    [idx_y_unreg,idx_y_reg] = findPointIndicesToNotRegister( X,Y,MAX_REGISTERABLE_DIST );
+    %}
     iter_num=0;
-    
+    idx_y_unreg = [];
     [Y1,Y2,Y3] = ...
-        registerPoints( X,T.Y,opt,MIN_SIZE,MAX_REGISTERABLE_DIST,iter_num );
+        registerPoints( X,Y,opt,MIN_SIZE,MAX_REGISTERABLE_DIST,iter_num );
+        %registerPoints( X,Y(idx_y_reg,:),opt,MIN_SIZE,MAX_REGISTERABLE_DIST,iter_num );
 end
  
 function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE,max_dist,iter_num )   
     if size(X,1) > MIN_SIZE && size(Y,1) > MIN_SIZE
-        Y_old = Y;
+        %Y_old = Y;
         %{
         if iter_num > 0
             [R,T] = icp( X,Y );
@@ -25,9 +33,10 @@ function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE,max_dist,iter_num )
             end
         end
         %}
-        T = cpd_register(X,Y,opt);
-        Y = T.Y;
-        
+        if iter_num > 0
+            T = cpd_register(X,Y,opt);
+            Y = T.Y;
+        end
         
         min_x = min( [ X(:,1); Y(:,1) ] );
         max_x = max( [ X(:,1); Y(:,1) ] );

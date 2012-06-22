@@ -1,12 +1,21 @@
-function [ idx ] = findPointIndicesToNotRegister( ...
+function [ idx_out,idx_in ] = findPointIndicesToNotRegister( ...
                            X,Y,max_registrable_dist )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
-    
-
-
-
-idx = find( neighborDistances > max_registrable_dist );
+% FINDPOINTINDICESTONOTREGISTER Find the points in Y whose
+% closest point is larger than the max_registrable_dist
+% 
+% These are the points that will be registered to the secondary
+% reference scan
+idx_out = [];
+idx_in = [];
+for i=1:size(Y,1)
+    [id,dist] = kNearestNeighbors(X,Y(i,:),1);
+    idx_1 = find( dist > max_registrable_dist );
+    idx_out = [idx_out idx_1];
+    idx_2 = find( dist <= max_registrable_dist );
+    idx_in = [idx_in idx_2];
+end
+    idx_out = unique(idx_out);
+    idx_in = unique
 
 end
 
