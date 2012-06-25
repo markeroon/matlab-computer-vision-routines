@@ -13,22 +13,23 @@ t = [ 63.3043,  234.5963, -46.8392 ];
 filename_0 = sprintf( '../../Data/PlantDataPly/plants_converted82-%03d-clean-clear.ply', 0 );
 [Elements_0,varargout_0] = plyread(filename_0);
 X = [Elements_0.vertex.x';Elements_0.vertex.y';Elements_0.vertex.z']';
+%X = X(1:60:end,:);
 
 % second reference scan
 q = 6;
 filename_1 = sprintf( '../../Data/PlantDataPly/plants_converted82-%03d-clean-clear.ply', q );
 [Elements_1,varargout_1] = plyread(filename_1);
 X2 = [Elements_1.vertex.x';Elements_1.vertex.y';Elements_1.vertex.z']';
-
+%X2 = X2(1:60:end,:);
 for j=1:q
         X2_dash = R*X2' + repmat(t,size(X2,1),1)';
         X2 = X2_dash';
 end
 
-min_size = 1500;
+min_size = 5000;%500
 max_registerable_dist = 15;
 opt.viz = 1;
-opt.max_it = 30;
+opt.max_it = 100;
 opt.outliers = 0.1;
 opt.tol = 1e-12;
 opt.rot = 0;
@@ -54,26 +55,18 @@ for j=1:q
         Y_dash = R*Y' + repmat(t,size(Y,1),1)';
         Y = Y_dash';
 end
-
-
-
-%opt.lambda = 7;
-%opt.beta = 2; %possible that less than this is too much ram
-%Yr_subdiv = ones(size(Y));
-
-%[Yr_subdiv(:,1),Yr_subdiv(:,2),Yr_subdiv(:,3)] =  ...      
+%Y = Y(1:60:end,:);    
 [Yr_x,Yr_y,Yr_z,Yr_unreg] = ...
     registerRecursive( X,Y,opt,min_size,max_registerable_dist );
-                    %  register_surface_subdivision_upper_bound( ...
-                    %                       X,Y,iters_rigid,iters_nonrigid,...
-                    %                       lambda,beta, min_size );
-            
-%[Yr_x2,Yr_y2,Yr_z2,Yr_unreg2] = registerRecursive( X2,Yr_unreg                    
+
+[Yr_x2,Yr_y2,Yr_z2,Yr_unreg2] = ...
+    registerRecursive( X2,Yr_unreg,opt,min_size,max_registerable_dist);          
 %[neighbour_id] = kNearestNeighbors(X, Yr_subdiv, 1 );
 % get nearest neighbour for each point in the original cloud in the
 % matched cloud
-filename = sprintf( '../../Data/Yr_subdiv%02d-%s.mat',[q datestr(now,'dd.mm.yy.HH.MM') ] )
-save(filename,'Yr_subdiv');
+%Yr_subdiv = [Yr_x,Yr_y,Yr_z];
+%filename = sprintf( '../../Data/Yr_subdiv%02d-%s.mat',[q datestr(now,'dd.mm.yy.HH.MM') ] )
+%save(filename,'Yr_subdiv');
 %{
 neighbour_id_unique = unique(neighbour_id);
 Y_reg_all{q} = Yr_subdiv;
@@ -93,5 +86,6 @@ rms_e_all = [rms_e_all rms_e];
 neighbour_id_reg=[];
 neighbour_dist_reg=[];
 %}
-Y_reg_all{q} = [Yr_x,Yr_y,Yr_z]; %Yr_subdiv;
+Y_reg_all{q} = [Yr_x' Yr_x2' ; Yr_y' Yr_y2' ; Yr_z' Yr_z2']';
+%Y_reg_all{q} = [Yr_x' Yr_x2' ; Yr_y' Yr_y2' ; Yr_z' Yr_z2']; %Yr_subdiv;
 end
