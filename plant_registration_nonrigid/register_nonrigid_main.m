@@ -13,22 +13,22 @@ t = [ 63.3043,  234.5963, -46.8392 ];
 filename_0 = sprintf( '../../Data/PlantDataPly/plants_converted82-%03d-clean-clear.ply', 0 );
 [Elements_0,varargout_0] = plyread(filename_0);
 X = [Elements_0.vertex.x';Elements_0.vertex.y';Elements_0.vertex.z']';
-%X = X(1:60:end,:);
+%X = X(1:30:end,:);
 
 % second reference scan
 q = 6;
 filename_1 = sprintf( '../../Data/PlantDataPly/plants_converted82-%03d-clean-clear.ply', q );
 [Elements_1,varargout_1] = plyread(filename_1);
 X2 = [Elements_1.vertex.x';Elements_1.vertex.y';Elements_1.vertex.z']';
-%X2 = X2(1:60:end,:);
+%X2 = X2(1:30:end,:);
 for j=1:q
         X2_dash = R*X2' + repmat(t,size(X2,1),1)';
         X2 = X2_dash';
 end
 
-min_size = 5000;%500
+min_size = 300;
 max_registerable_dist = 15;
-opt.viz = 1;
+opt.viz = 0;
 opt.max_it = 100;
 opt.outliers = 0.1;
 opt.tol = 1e-12;
@@ -40,6 +40,7 @@ opt.method='rigid';
 [X2r_x,X2r_y,X2r_z,idx_x2r_unreg] = ...
     registerRecursive( X,X2,opt,min_size,max_registerable_dist );
 
+X2_r = [X2r_x,X2r_y,X2r_z];
 Y_reg_all = cell(11,1);
 
 %register all of the indices
@@ -55,7 +56,7 @@ for j=1:q
         Y_dash = R*Y' + repmat(t,size(Y,1),1)';
         Y = Y_dash';
 end
-%Y = Y(1:60:end,:);    
+%Y = Y(1:30:end,:);    
 [Yr_x,Yr_y,Yr_z,Yr_unreg] = ...
     registerRecursive( X,Y,opt,min_size,max_registerable_dist );
 
@@ -88,4 +89,8 @@ neighbour_dist_reg=[];
 %}
 Y_reg_all{q} = [Yr_x' Yr_x2' ; Yr_y' Yr_y2' ; Yr_z' Yr_z2']';
 %Y_reg_all{q} = [Yr_x' Yr_x2' ; Yr_y' Yr_y2' ; Yr_z' Yr_z2']; %Yr_subdiv;
+filename = sprintf( '../../Data/Yq%02d-%s.mat',[q datestr(now,'dd.mm.yy.HH.MM') ] )
+Yq = Y_reg_all{q};
+save(filename,'Yq');
+Yq = [];
 end

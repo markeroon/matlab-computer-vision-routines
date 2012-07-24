@@ -11,21 +11,7 @@ function [Y1,Y2,Y3,Y_unreg] = ...
 end
  
 function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE,max_dist,iter_num )   
-    if size(X,1) > MIN_SIZE && size(Y,1) > MIN_SIZE && max_dist >= 1
-        %Y_old = Y;
-        %{
-        if iter_num > 0
-            [R,T] = icp( X,Y );
-            Y_icp = R*Y' + repmat(T',size(Y,1),1)';
-            Y = Y_icp';
-            if opt.viz 
-                figure;
-                plot3( X(:,1),X(:,2),X(:,3), '.b', 'markersize',1 )
-                hold on
-                plot3( Y_icp(:,1),Y_icp(:,2),Y_icp(:,3), '.r', 'markersize',1 )
-            end
-        end
-        %}
+    if size(X,1) > MIN_SIZE && size(Y,1) > MIN_SIZE && max_dist >= 1 && iter_num < 4
         if iter_num > 0
             T = cpd_register(X,Y,opt);
             Y = T.Y;
@@ -79,21 +65,21 @@ function [X__,Y__,Z__] = registerPoints( X,Y,opt,MIN_SIZE,max_dist,iter_num )
         
         
         %make fgt = 0 for the smaller subdivisions
-        [Y1_000,Y2_000,Y3_000] = registerPoints( X_ur_000,Y(idx_y_000,:),opt,MIN_SIZE,max_dist / 2,iter_num+1 );
+        [Y1_000,Y2_000,Y3_000] = registerPoints( X_ur_000,Y(idx_y_000,:),opt,MIN_SIZE,max_dist - 2,iter_num+1 );
         %idx_x_000 = 0; idx_y_000 = 0;
-        [Y1_001,Y2_001,Y3_001] = registerPoints( X_ur_001,Y(idx_y_001,:),opt,MIN_SIZE,max_dist / 2,iter_num+1 );
+        [Y1_001,Y2_001,Y3_001] = registerPoints( X_ur_001,Y(idx_y_001,:),opt,MIN_SIZE,max_dist - 2,iter_num+1 );
         %idx_x_001 = 0; idx_y_001 = 0;
-        [Y1_010,Y2_010,Y3_010] = registerPoints( X_ur_010,Y(idx_y_010,:),opt,MIN_SIZE,max_dist / 2,iter_num+1 );
+        [Y1_010,Y2_010,Y3_010] = registerPoints( X_ur_010,Y(idx_y_010,:),opt,MIN_SIZE,max_dist - 2,iter_num+1 );
         %idx_x_010 = 0; idx_y_010 = 0;
-        [Y1_011,Y2_011,Y3_011] = registerPoints( X_ur_011,Y(idx_y_011,:),opt,MIN_SIZE,max_dist / 2,iter_num+1 );
+        [Y1_011,Y2_011,Y3_011] = registerPoints( X_ur_011,Y(idx_y_011,:),opt,MIN_SIZE,max_dist - 2,iter_num+1 );
         %idx_x_011 = 0; idx_y_011 = 0;
-        [Y1_100,Y2_100,Y3_100] = registerPoints( X_ur_100,Y(idx_y_100,:),opt,MIN_SIZE,max_dist / 2,iter_num+1 );
+        [Y1_100,Y2_100,Y3_100] = registerPoints( X_ur_100,Y(idx_y_100,:),opt,MIN_SIZE,max_dist - 2,iter_num+1 );
         %idx_x_100 = 0; idx_y_100 = 0;
-        [Y1_101,Y2_101,Y3_101] = registerPoints( X_ur_101,Y(idx_y_101,:),opt,MIN_SIZE,max_dist / 2,iter_num+1 );
+        [Y1_101,Y2_101,Y3_101] = registerPoints( X_ur_101,Y(idx_y_101,:),opt,MIN_SIZE,max_dist - 2,iter_num+1 );
         %idx_x_101 = 0; idx_y_101 = 0;
-        [Y1_110,Y2_110,Y3_110] = registerPoints( X_ur_110,Y(idx_y_110,:),opt,MIN_SIZE,max_dist / 2,iter_num+1 );
+        [Y1_110,Y2_110,Y3_110] = registerPoints( X_ur_110,Y(idx_y_110,:),opt,MIN_SIZE,max_dist - 2,iter_num+1 );
         %idx_x_110 = 0; idx_y_110 = 0;
-        [Y1_111,Y2_111,Y3_111] = registerPoints( X_ur_111,Y(idx_y_111,:),opt,MIN_SIZE,max_dist / 2,iter_num+1 );
+        [Y1_111,Y2_111,Y3_111] = registerPoints( X_ur_111,Y(idx_y_111,:),opt,MIN_SIZE,max_dist - 2,iter_num+1 );
         %idx_x_111 = 0; idx_y_111 = 0;
         X__ = [Y1_000; Y1_001 ; Y1_010 ; Y1_011 ; Y1_100 ; Y1_101 ; Y1_110 ; Y1_111 ]; 
         Y__ = [Y2_000; Y2_001 ; Y2_010 ; Y2_011 ; Y2_100 ; Y2_101 ; Y2_110 ; Y2_111 ];  
